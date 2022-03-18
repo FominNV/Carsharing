@@ -1,0 +1,47 @@
+@mixin flex($jc: flex-start, $ai: flex-start, $fd: row) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+}
+
+@mixin btn-reset() {
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+@mixin inp-reset() {
+  border: none;
+  outline: none;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin cursor {
+  cursor: url("../../content/images/cursor/regular.png");
+}
+
+@mixin scroll-bar-min() {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $aqua;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(19, 19, 90);
+    border-radius: 15px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(28, 28, 180);
+  }
+}

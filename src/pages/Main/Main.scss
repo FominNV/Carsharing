@@ -1,0 +1,73 @@
+@import "../../sass/main";
+
+.Main {
+  width: 100%;
+  height: 100%;
+  background: $white;
+  @include flex;
+
+  &__main {
+    width: 100%;
+    height: calc(100% - (64px + 48px));
+
+    @media (max-width: $md) {
+      height: calc(100% - (92px + 72px));
+    }
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    padding-top: 10rem;
+
+    @media (max-width: $md) {
+      padding-top: 34px;
+    }
+  }
+
+  &__tagline1 {
+    font: 700 70px/0.9 $roboto-bold;
+    color: $black;
+
+    @media (max-width: $md) {
+      font-size: 2rem;
+      line-height: 2rem;
+    }
+  }
+
+  &__tagline2 {
+    margin-top: 0.25rem;
+    font: 700 70px/0.9 $roboto-bold;
+    color: $green;
+
+    @media (max-width: $md) {
+      font-size: 2rem;
+      line-height: 2rem;
+    }
+  }
+
+  &__tagline3 {
+    margin-top: 2rem;
+    font: 300 26px/1.2 $roboto-light;
+    color: $gray;
+
+    @media (max-width: $md) {
+      margin-top: 1rem;
+      font-size: 18px;
+      line-height: 21px;
+    }
+  }
+
+  &__btn {
+    width: 250px;
+    height: 48px;
+    margin-top: 60px;
+
+    @media (max-width: $md) {
+      position: relative;
+      width: calc(100% + 50px);
+      right: 25px;
+      margin-top: 2rem;
+    }
+  }
+}
