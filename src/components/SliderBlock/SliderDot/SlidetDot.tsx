@@ -12,14 +12,13 @@ const SliderDot: FC<ISliderDotProps> = ({ slideIndex, setSlideIndex }): JSX.Elem
 
   return (
     <div className="SliderDot">
-      {Array.from({ length: dataSlider.length }).map((item, index) => (
+      {Array.from({ length: dataSlider.length }).map((_, index: number) => (
         <button
           data-key={index + 1}
+          key={index}
           onClick={onclickHandler}
-          className={slideIndex === index + 1 ? "SliderDot__dot active" : "SliderDot__dot"}
-        >
-          {}
-        </button>
+          className={slideIndex === index + 1 ? "SliderDot__dot_active" : "SliderDot__dot"}
+        />
       ))}
     </div>
   )
