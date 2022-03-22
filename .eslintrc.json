@@ -74,7 +74,9 @@
     "jsx-a11y/anchor-is-valid": 0,
     "react/button-has-type": 0,
     "default-param-last": "off",
-    "@typescript-eslint/default-param-last": "off"
+    "@typescript-eslint/default-param-last": "off",
+    "react/no-array-index-key": "off",
+    "jsx-a11y/control-has-associated-label": "off"
   },
   "settings": {
     "import/resolver": {
