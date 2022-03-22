@@ -1,8 +1,7 @@
 import { ButtonBgColor } from "../../Button/ButtonTypes"
 
 export interface ISliderItemProps {
-  slideIndex: number
-  index: number
+  active: boolean
   path: string
   title: string
   text: string
