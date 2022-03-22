@@ -29,11 +29,15 @@ const NavBar: FC = (): JSX.Element => {
     <>
       {showMenu && <PopupMenu />}
       <nav className="NavBar">
-        <button className={`NavBar__menu ${showMenu && "active"}`} onClick={toggleMenu}>
-          {showMenu ? <Close /> : <Burger />}
+        <button className={`NavBar__menu${showMenu ? "_active" : ""}`} onClick={toggleMenu}>
+          {showMenu ? (
+            <Close className="NavBar__menu_icon" />
+          ) : (
+            <Burger className="NavBar__menu_icon" />
+          )}
         </button>
 
-        <div className={`NavBar__lang ${showMenu && "active"}`}>
+        <div className={`NavBar__lang${showMenu ? "_active" : ""}`}>
           <button className="NavBar__lang_btn" onClick={toggleLanguage}>
             <div className="NavBar__lang_name">{rusLang ? <Rus /> : <Eng />}</div>
             <div className="NavBar__lang_circle">
