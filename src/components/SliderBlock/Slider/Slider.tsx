@@ -1,4 +1,5 @@
 import { FC, ReactNode, useState } from "react"
+import { useTypedSelector } from "../../../store/selectors"
 import SliderBtn from "../SliderBtn/SliderBtn"
 import SliderDot from "../SliderDot/SlidetDot"
 import SliderItem from "../SliderItem/SliderItem"
@@ -7,7 +8,6 @@ import dataSlider from "../../../content/data/dataSlider"
 import { IDataSlider } from "../../../content/data/dataTypes"
 
 import "./Slider.scss"
-import { useTypedSelector } from "../../../store/selectors"
 
 const Slider: FC = (): JSX.Element => {
   const { showMenu } = useTypedSelector((state) => state.common)
@@ -33,8 +33,8 @@ const Slider: FC = (): JSX.Element => {
     return data.map((elem: IDataSlider, index: number) => {
       return (
         <SliderItem
-          index={index + 1}
-          slideIndex={slideIndex}
+          active={index + 1 === slideIndex}
+          key={index}
           path={elem.imgPath}
           title={elem.title}
           text={elem.text}
