@@ -5,16 +5,9 @@ import { ButtonBorderRadius, ButtonColor } from "../../Button/ButtonTypes"
 
 import "./SliderItem.scss"
 
-const SliderItem: FC<ISliderItemProps> = ({
-  slideIndex,
-  index,
-  path,
-  title,
-  text,
-  btnColor
-}): JSX.Element => {
+const SliderItem: FC<ISliderItemProps> = ({ active, path, title, text, btnColor }): JSX.Element => {
   return (
-    <div className={`SliderItem ${index === slideIndex && "active"}`}>
+    <div className={`SliderItem${active ? "_active" : ""}`}>
       <img src={path} alt="car" className="SliderItem__img" />
 
       <div className="SliderItem__content">
@@ -25,8 +18,8 @@ const SliderItem: FC<ISliderItemProps> = ({
           <Button
             bgColor={btnColor}
             name="Подробнее"
-            color={ButtonColor.gray}
-            borderRadius={ButtonBorderRadius.small}
+            color={ButtonColor.GRAY}
+            borderRadius={ButtonBorderRadius.SMALL}
           />
         </div>
       </div>
