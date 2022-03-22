@@ -11,25 +11,25 @@ const dataSlider: IDataSlider[] = [
     imgPath: page1,
     title: "Бесплатная парковка",
     text: `Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.`,
-    btnColor: ButtonBgColor.greenDark
+    btnColor: ButtonBgColor.GREEN_DARK
   },
   {
     imgPath: page2,
     title: "Страховка",
     text: "Полная страховка автомобиля",
-    btnColor: ButtonBgColor.cloudy
+    btnColor: ButtonBgColor.CLOUDY
   },
   {
     imgPath: page3,
     title: "Бензин",
     text: "Полный бак на любой заправке города за наш счёт",
-    btnColor: ButtonBgColor.brownRed
+    btnColor: ButtonBgColor.BROWN_RED
   },
   {
     imgPath: page4,
     title: "Обслуживание",
     text: "Автомобиль проходит еженедельное ТО",
-    btnColor: ButtonBgColor.purple
+    btnColor: ButtonBgColor.PURPLE
   }
 ]
 

@@ -1,5 +1,5 @@
 import { FC } from "react"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet-async"
 import Button from "../../components/Button/Button"
 import Footer from "../../components/Footer/Footer"
 import MainLayout from "../../layouts/MainLayout/MainLayout"
@@ -28,7 +28,7 @@ const Main: FC = (): JSX.Element => {
                 <p className="Main__tagline3">Поминутная аренда авто твоего города</p>
 
                 <div className="Main__btn">
-                  <Button name="Забронировать" bgColor={ButtonBgColor.green} />
+                  <Button name="Забронировать" bgColor={ButtonBgColor.GREEN} />
                 </div>
               </div>
             </Container>

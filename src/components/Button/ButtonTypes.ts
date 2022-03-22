@@ -1,20 +1,20 @@
 export enum ButtonBgColor {
-  green = "green",
-  greenDark = "greenDark",
-  disable = "disable",
-  cloudy = "cloudy",
-  brownRed = "brownRed",
-  purple = "purple",
+  GREEN = "green",
+  GREEN_DARK = "greenDark",
+  DISABLE = "disable",
+  CLOUDY = "cloudy",
+  BROWN_RED = "brownRed",
+  PURPLE = "purple"
 }
 
 export enum ButtonColor {
-  white = "white",
-  gray = "gray",
+  WHITE = "white",
+  GRAY = "gray"
 }
 
 export enum ButtonBorderRadius {
-  small = "small",
-  medium = "medium",
+  SMALL = "small",
+  MEDIUM = "medium"
 }
 
 export interface IButtonProps {
