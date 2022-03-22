@@ -22,26 +22,3 @@
   margin: 0;
   padding: 0;
 }
-
-@mixin cursor {
-  cursor: url("../../content/images/cursor/regular.png");
-}
-
-@mixin scroll-bar-min() {
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: $aqua;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgb(19, 19, 90);
-    border-radius: 15px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(28, 28, 180);
-  }
-}
