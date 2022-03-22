@@ -1,28 +1,28 @@
 @import "../../sass/main";
 
 .NavBar {
-  width: 64px;
+  width: 65px;
   height: 100%;
-  padding: 2rem 1rem;
+  padding: 32px 16px;
   background: $black;
   @include flex(space-between, center, column);
+
+  @media (max-width: $lg) {
+    width: 86px;
+  }
 
   @media (max-width: $md) {
     position: absolute;
     top: 0;
     left: 0;
+    width: 65px;
     height: 64px;
     background: $transparent;
     color: $black;
   }
 
-  @media (max-width: $md) {
-    height: 64px;
-    background: $transparent;
-    color: $black;
-  }
-
-  &__menu {
+  &__menu,
+  &__menu_active {
     position: relative;
     @include btn-reset;
     color: $white;
@@ -36,7 +36,15 @@
       color: $white;
     }
 
-    &.active {
+    @media (max-width: $md) {
+      color: $black;
+
+      &:active {
+        color: $black;
+      }
+    }
+
+    &_active {
       color: $white;
 
       &:hover {
@@ -51,19 +59,31 @@
         position: absolute;
         top: 28px;
         left: 28px;
+        color: $white;
+
+        &:hover {
+          color: $green;
+        }
+
+        &:active {
+          color: $white;
+        }
       }
     }
 
-    @media (max-width: $md) {
-      color: $black;
+    &_icon {
+      @media (max-width: $lg) {
+        transform: scaleX(1.32);
+      }
 
-      &:active {
-        color: $black;
+      @media (max-width: $md) {
+        transform: scaleX(1);
       }
     }
   }
 
-  &__lang {
+  &__lang,
+  &__lang_active {
     position: relative;
     width: 30px;
     height: 14px;
@@ -92,7 +112,7 @@
       }
     }
 
-    &.active {
+    &_active {
       @media (max-width: $md) {
         position: fixed;
         bottom: 28px;
