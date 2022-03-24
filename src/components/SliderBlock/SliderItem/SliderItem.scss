@@ -1,7 +1,6 @@
 @import "../../../sass/main";
 
-.SliderItem,
-.SliderItem_active {
+.SliderItem {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,7 +15,8 @@
   }
 
   @media (max-width: $xl) {
-    padding: 221px 64px;
+    padding: 0 64px;
+    @include flex(_, center);
   }
 
   &__img {

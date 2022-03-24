@@ -9,8 +9,7 @@
   @include flex(space-between);
   z-index: 5;
 
-  &__dot,
-  &__dot_active {
+  &__dot {
     @include btn-reset;
     width: 8px;
     height: 8px;

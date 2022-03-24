@@ -7,7 +7,7 @@ import "./SliderItem.scss"
 
 const SliderItem: FC<ISliderItemProps> = ({ active, path, title, text, btnColor }): JSX.Element => {
   return (
-    <div className={`SliderItem${active ? "_active" : ""}`}>
+    <div className={`SliderItem ${active ? "SliderItem_active" : ""}`}>
       <img src={path} alt="car" className="SliderItem__img" />
 
       <div className="SliderItem__content">

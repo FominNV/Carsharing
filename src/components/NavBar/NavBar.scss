@@ -21,8 +21,7 @@
     color: $black;
   }
 
-  &__menu,
-  &__menu_active {
+  &__menu {
     position: relative;
     @include btn-reset;
     color: $white;
@@ -82,8 +81,7 @@
     }
   }
 
-  &__lang,
-  &__lang_active {
+  &__lang {
     position: relative;
     width: 30px;
     height: 14px;
