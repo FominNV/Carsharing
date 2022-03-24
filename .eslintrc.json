@@ -76,7 +76,8 @@
     "default-param-last": "off",
     "@typescript-eslint/default-param-last": "off",
     "react/no-array-index-key": "off",
-    "jsx-a11y/control-has-associated-label": "off"
+    "jsx-a11y/control-has-associated-label": "off",
+    "linebreak-style": "off"
   },
   "settings": {
     "import/resolver": {
