@@ -46,7 +46,7 @@ const Slider: FC = (): JSX.Element => {
 
   return (
     <div className="Slider">
-      {showMenu && <div className="Slider__popup"></div>}
+      {showMenu && <div className="Slider__popup" />}
       {createSlides(dataSlider)}
 
       <SliderBtn moveSlide={nextSlide} direction="next" />
