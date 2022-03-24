@@ -1,3 +1,4 @@
+import { Component, ReactComponentElement, ReactElement, ReactSVG } from "react"
 import { ButtonBgColor } from "../../components/Button/ButtonTypes"
 
 export interface IDataSlider {
@@ -5,4 +6,9 @@ export interface IDataSlider {
   title: string
   text: string
   btnColor: ButtonBgColor
+}
+
+export interface IDataPopupMenu {
+  link: string[]
+  auth: ReactElement[]
 }
