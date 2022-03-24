@@ -10,7 +10,7 @@ const Footer: FC = (): JSX.Element => {
         <div className="Footer__content">
           <p className="Footer__info">© 2016-2019 «Need for drive»</p>
 
-          <a href="#" className="Footer__phone">
+          <a href="tel:+74952342244" className="Footer__phone">
             8 (495) 234-22-44
           </a>
         </div>
