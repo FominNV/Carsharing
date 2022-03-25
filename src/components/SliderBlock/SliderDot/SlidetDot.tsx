@@ -17,7 +17,7 @@ const SliderDot: FC<ISliderDotProps> = ({ slideIndex, setSlideIndex }): JSX.Elem
           data-key={index + 1}
           key={index}
           onClick={onclickHandler}
-          className={slideIndex === index + 1 ? "SliderDot__dot_active" : "SliderDot__dot"}
+          className={`SliderDot__dot ${slideIndex === index + 1 ? "SliderDot__dot_active" : ""}`}
         />
       ))}
     </div>
