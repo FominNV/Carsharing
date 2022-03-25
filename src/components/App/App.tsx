@@ -7,7 +7,7 @@ import "./App.scss"
 const App: FC = (): JSX.Element => {
   return (
     <Routes>
-      <Route path="*" element={<Main />} />
+      <Route path="/" element={<Main />} />
     </Routes>
   )
 }
