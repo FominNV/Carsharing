@@ -6,7 +6,7 @@
   height: 100vh;
   min-height: $min-height;
   @include flex;
-  overflow: hidden;
+  overflow-x: hidden;
 
   @media (max-width: $md) {
     min-height: 400px;
