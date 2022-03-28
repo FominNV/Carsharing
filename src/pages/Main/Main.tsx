@@ -1,5 +1,6 @@
 import { FC } from "react"
-import { Helmet } from "react-helmet-async"
+import { Link } from "react-router-dom"
+
 import Button from "../../components/Button/Button"
 import Footer from "../../components/Footer/Footer"
 import MainLayout from "../../layouts/MainLayout/MainLayout"
@@ -14,12 +15,8 @@ import "./Main.scss"
 const Main: FC = (): JSX.Element => {
   return (
     <div className="Main">
-      <Helmet>
-        <title>NFD</title>
-      </Helmet>
-
       <LeftSection>
-        <MainLayout>
+        <MainLayout title="NFD">
           <main className="Main__main">
             <Container>
               <div className="Main__content">
@@ -28,7 +25,9 @@ const Main: FC = (): JSX.Element => {
                 <p className="Main__tagline3">Поминутная аренда авто твоего города</p>
 
                 <div className="Main__btn">
-                  <Button name="Забронировать" bgColor={ButtonBgColor.GREEN} />
+                  <Link to="order/place">
+                    <Button name="Забронировать" bgColor={ButtonBgColor.GREEN} />
+                  </Link>
                 </div>
               </div>
             </Container>
