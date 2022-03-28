@@ -3,6 +3,7 @@
 .Header {
   width: 100%;
   height: 64px;
+  @include flex(center);
 
   @media (max-width: $md) {
     height: 92px;
@@ -24,6 +25,7 @@
     @include flex(_, center);
     font: 700 30px $roboto-bold;
     color: $green;
+    text-decoration: none;
   }
 
   &__city {
