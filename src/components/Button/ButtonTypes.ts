@@ -1,7 +1,6 @@
 export enum ButtonBgColor {
   GREEN = "green",
   GREEN_DARK = "greenDark",
-  DISABLE = "disable",
   CLOUDY = "cloudy",
   BROWN_RED = "brownRed",
   PURPLE = "purple"
@@ -22,4 +21,5 @@ export interface IButtonProps {
   bgColor: ButtonBgColor
   color?: ButtonColor
   borderRadius?: ButtonBorderRadius
+  disabled?: boolean
 }

@@ -41,10 +41,6 @@
     background: linear-gradient(90deg, #281349 0%, #720c7b 100%);
   }
 
-  &.disable {
-    background: $gray-light;
-  }
-
   &:hover {
     .Button__filter {
       background: rgba(0, 0, 0, 0.2);
@@ -54,6 +50,17 @@
   &:active {
     .Button__filter {
       background: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &:disabled {
+    background: $gray-light;
+  }
+
+  &:disabled:hover,
+  &:disabled:active {
+    .Button__filter {
+      background: rgba(0, 0, 0, 0);
     }
   }
 
