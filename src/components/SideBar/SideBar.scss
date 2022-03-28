@@ -1,0 +1,45 @@
+@import "../../sass/main";
+
+.SideBar {
+  width: 320px;
+  height: calc(100% - 128px);
+  padding: 32px 0 32px 32px;
+  border-left: 1px solid $gray-light;
+
+  @media (max-width: $md) {
+    width: 100%;
+    border-top: 1px solid $gray-light;
+    border-left: none;
+  }
+
+  &__title {
+    width: 100%;
+    font: 500 18px/21px $roboto-medium;
+    color: $black;
+    text-align: right;
+  }
+
+  &__order-points {
+    width: 100%;
+    margin-top: 26px;
+  }
+
+  &__total-price {
+    width: 100%;
+    margin-top: 32px;
+    font: 400 16px/16px $roboto-regular;
+  }
+
+  &__btn {
+    width: 100%;
+    height: 48px;
+    margin-top: 32px;
+
+    @media (max-width: $md) {
+      position: relative;
+      width: calc(100% + 120px);
+      right: 60px;
+      margin-top: 32px;
+    }
+  }
+}
