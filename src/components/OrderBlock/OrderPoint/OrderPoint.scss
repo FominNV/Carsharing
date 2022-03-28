@@ -1,0 +1,31 @@
+@import "../../../sass/main";
+
+.OrderPoint {
+  position: relative;
+  width: 100%;
+  font: 300 14px/16px $roboto-light;
+  color: $gray;
+  @include flex(_, flex-end);
+
+  &__title {
+    display: inline-block;
+    color: $black;
+    white-space: nowrap;
+  }
+
+  &__dots {
+    width: auto;
+    padding: 0 12px;
+    overflow: hidden;
+
+    &_content {
+      width: 100%;
+      overflow: hidden;
+    }
+  }
+
+  &__value {
+    flex: 0 1 120px;
+    text-align: right;
+  }
+}
