@@ -1,12 +1,16 @@
 import { IDataPopupMenu } from "./dataTypes"
 
-import { ReactComponent as Telegram } from "../icons/PopupMenu/telegram.svg"
-import { ReactComponent as Facebook } from "../icons/PopupMenu/facebook.svg"
-import { ReactComponent as Instagram } from "../icons/PopupMenu/instagram.svg"
+import { ReactComponent as Ok } from "../icons/PopupMenu/ok.svg"
+import { ReactComponent as Vk } from "../icons/PopupMenu/vk.svg"
+import { ReactComponent as Tg } from "../icons/PopupMenu/telegram.svg"
 
 const dataPopupMenu: IDataPopupMenu = {
   link: ["Парковка", "Страховка", "Бензин", "Обслуживание"],
-  auth: [<Telegram />, <Facebook />, <Instagram />]
+  auth: [
+    <Ok width={32} height={32} />,
+    <Vk width={32} height={32} />,
+    <Tg width={32} height={32} />
+  ]
 }
 
 export default dataPopupMenu
