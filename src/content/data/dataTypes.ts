@@ -12,3 +12,13 @@ export interface IDataPopupMenu {
   link: string[]
   auth: ReactElement[]
 }
+
+export interface IBreadcrumb {
+  title: string
+  path: string
+}
+
+export interface IAddressSearch {
+  city: string
+  streets: string[]
+}
