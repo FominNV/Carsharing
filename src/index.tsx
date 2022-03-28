@@ -10,7 +10,7 @@ import { store } from "./store"
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter basename={window.location.pathname || ""}>
+      <BrowserRouter>
         <Provider store={store}>
           <App />
         </Provider>
