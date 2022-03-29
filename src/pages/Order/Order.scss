@@ -5,6 +5,10 @@
   height: calc(100% - 128px);
   @include flex(center);
 
+  @media (max-width: $md) {
+    height: fit-content;
+  }
+
   &__content {
     width: 100%;
     height: 100%;
