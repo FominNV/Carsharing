@@ -1,6 +1,6 @@
-import { IAddressSearch } from "./dataTypes"
+import { IDataSearchPlace } from "./dataTypes"
 
-const dataSearchPlace: IAddressSearch[] = [
+const dataSearchPlace: IDataSearchPlace[] = [
   {
     city: "Ульяновск",
     streets: ["Нариманова, 42", "Почтовая, 16", "Урицкого, 29", "Шигаева, 22"]

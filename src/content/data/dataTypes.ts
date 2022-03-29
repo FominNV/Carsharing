@@ -18,7 +18,7 @@ export interface IBreadcrumb {
   path: string
 }
 
-export interface IAddressSearch {
+export interface IDataSearchPlace {
   city: string
   streets: string[]
 }
