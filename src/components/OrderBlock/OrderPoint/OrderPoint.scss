@@ -3,9 +3,9 @@
 .OrderPoint {
   position: relative;
   width: 100%;
+  @include flex(_, flex-end);
   font: 300 14px/16px $roboto-light;
   color: $gray;
-  @include flex(_, flex-end);
 
   &__title {
     display: inline-block;
@@ -27,5 +27,9 @@
   &__value {
     flex: 0 1 120px;
     text-align: right;
+
+    &_no-wrap {
+      white-space: nowrap;
+    }
   }
 }

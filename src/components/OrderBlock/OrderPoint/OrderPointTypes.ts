@@ -1,4 +1,5 @@
 export interface IOrderPointProps {
   title: string
-  value: string
+  firstValue: string
+  secondValue?: string
 }
