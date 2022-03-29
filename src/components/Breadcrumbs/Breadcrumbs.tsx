@@ -1,10 +1,10 @@
 import { FC, ReactNode } from "react"
-import { useLocation, useNavigate, useParams, useRoutes } from "react-router-dom"
-import dataBreadcrumbs from "../../content/data/dataBreadcrumbs"
+import { useParams } from "react-router-dom"
+import Container from "../Container/Container"
 import { IBreadcrumb } from "../../content/data/dataTypes"
 
+import dataBreadcrumbs from "../../content/data/dataBreadcrumbs"
 import { ReactComponent as Triangle } from "../../content/icons/Breadcrumbs/triangle.svg"
-import Container from "../Container/Container"
 
 import "./Breadcrumbs.scss"
 
@@ -18,12 +18,12 @@ const Breadcrumbs: FC = (): JSX.Element => {
         className={`Breadcrumbs__item ${params.id === elem.path ? "Breadcrumbs__item_active" : ""}`}
         key={i}
       >
-        {i > 0 && (
+        {elem.title}
+        {i + 1 !== data.length && (
           <div className="Breadcrumbs__icon">
             <Triangle />
           </div>
         )}
-        {elem.title}
       </a>
     ))
   }

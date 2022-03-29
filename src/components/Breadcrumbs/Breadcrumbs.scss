@@ -17,6 +17,11 @@
     height: 100%;
     @include flex(_, center);
     flex-wrap: wrap;
+
+    @media (max-width: $md) {
+      width: fit-content;
+      @include flex(_, _, column);
+    }
   }
 
   &__item {
@@ -28,9 +33,10 @@
     text-decoration: none;
 
     @media (max-width: $md) {
-      width: 100%;
+      width: 160px;
+      height: 20px;
       margin: 0 0 8px 0;
-      @include flex(_, center);
+      @include flex(space-between, center);
     }
 
     &_active {
@@ -43,6 +49,6 @@
   }
 
   &__icon {
-    margin-right: 16px;
+    margin-left: 16px;
   }
 }
