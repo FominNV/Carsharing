@@ -5,8 +5,11 @@ import Container from "../Container/Container"
 import { ReactComponent as Map } from "../../content/icons/Header/map.svg"
 
 import "./Header.scss"
+import { useTypedSelector } from "../../store/selectors"
 
 const Header: FC = (): JSX.Element => {
+  const { city } = useTypedSelector((state) => state.common)
+
   return (
     <header className="Header">
       <Container>
@@ -17,7 +20,7 @@ const Header: FC = (): JSX.Element => {
 
           <div className="Header__city">
             <Map />
-            <div className="Header__city_name">Ульяновск</div>
+            <div className="Header__city_name">{city}</div>
           </div>
         </div>
       </Container>
