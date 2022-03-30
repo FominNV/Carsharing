@@ -7,22 +7,23 @@ import "./OrderInput.scss"
 
 const OrderInput: FC<IOrderInputProps> = ({
   label,
-  placeholder,
+  value,
   defaultValue,
+  placeholder,
   searchData,
   setState
 }): JSX.Element => {
-  const [value, setValue] = useState<string>("")
+  const [innerValue, setInnerValue] = useState<string>("")
   const [filteredData, setFilteredData] = useState<string[] | null>(null)
   const [showSearchBlock, setShowSearchBlock] = useState<boolean>(false)
   const input = useRef<HTMLInputElement | null>(null)
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.currentTarget.value)
+    setInnerValue(e.currentTarget.value)
   }
 
   const clearInputValue = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    setValue("")
+    setInnerValue("")
     setState(null)
     input.current?.focus()
   }
@@ -33,7 +34,7 @@ const OrderInput: FC<IOrderInputProps> = ({
       return
     }
 
-    setValue(e.currentTarget.name)
+    setInnerValue(e.currentTarget.name)
     setShowSearchBlock(false)
   }
 
@@ -42,13 +43,13 @@ const OrderInput: FC<IOrderInputProps> = ({
   }
 
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement>): void => {
-    setState(value)
+    setState(innerValue)
     setShowSearchBlock(false)
   }
 
   const onKeypressHandler = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
-      setState(value)
+      setState(innerValue)
       setShowSearchBlock(false)
     }
   }
@@ -70,27 +71,33 @@ const OrderInput: FC<IOrderInputProps> = ({
 
   const filterData = (data: string[]): string[] => {
     const filtered = data.filter((elem: string) => {
-      return elem.toLowerCase().includes(value.toLowerCase())
+      return elem.toLowerCase().includes(innerValue.toLowerCase())
     })
 
     return filtered.length > 0 ? filtered : ["нет совпадений"]
   }
 
   useEffect(() => {
-    if (defaultValue) {
-      setValue(defaultValue)
-    } else if (defaultValue === null) {
-      setValue("")
-    }
-  }, [defaultValue])
-
-  useEffect(() => {
-    if (value && searchData) {
-      setFilteredData(filterData(searchData))
-    } else if (!value && searchData) {
-      setFilteredData(null)
+    if (value) {
+      setInnerValue(value)
+    } else if (value === null) {
+      setInnerValue("")
     }
   }, [value])
+
+  useEffect(() => {
+    if (defaultValue) {
+      setInnerValue(defaultValue)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (innerValue && searchData) {
+      setFilteredData(filterData(searchData))
+    } else if (!innerValue && searchData) {
+      setFilteredData(null)
+    }
+  }, [innerValue])
 
   return (
     <div className="OrderInput">
@@ -102,7 +109,7 @@ const OrderInput: FC<IOrderInputProps> = ({
         <input
           type="text"
           className="OrderInput__inp"
-          value={value}
+          value={innerValue}
           name={label}
           ref={input}
           placeholder={placeholder}
@@ -113,7 +120,7 @@ const OrderInput: FC<IOrderInputProps> = ({
         />
 
         <button
-          className={`OrderInput__btn ${value ? "OrderInput__btn_active" : ""}`}
+          className={`OrderInput__btn ${innerValue ? "OrderInput__btn_active" : ""}`}
           onClick={clearInputValue}
         >
           <Clear />
