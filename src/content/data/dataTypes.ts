@@ -1,4 +1,4 @@
-import { Component, ReactComponentElement, ReactElement, ReactSVG } from "react"
+import { ReactElement } from "react"
 import { ButtonBgColor } from "../../components/Button/ButtonTypes"
 
 export interface IDataSlider {
@@ -18,7 +18,12 @@ export interface IBreadcrumb {
   path: string
 }
 
-export interface IDataSearchPlace {
-  city: string
-  streets: string[]
+export interface IPlace {
+  name: string
+  coord: number[]
+}
+
+export interface IDataOrderPlace {
+  city: IPlace
+  streets: IPlace[]
 }
