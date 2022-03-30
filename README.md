@@ -9,6 +9,8 @@
 
 Код - Eslint. Prettier;
 
+Карты - Yandex maps;
+
 Оптимизация изображений - Adobe Photoshop
 
 
