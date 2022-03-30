@@ -1,6 +1,7 @@
 export interface ICommonState {
   showMenu: boolean
   rusLang: boolean
+  city: string
 }
 
 export enum CommonActionTypes {
