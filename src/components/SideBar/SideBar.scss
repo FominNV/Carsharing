@@ -29,6 +29,10 @@
     width: 100%;
     margin-top: 32px;
     font: 400 16px/16px $roboto-regular;
+
+    &_price {
+      font: 500 16px/16px $roboto-medium;
+    }
   }
 
   &__btn {
