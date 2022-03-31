@@ -19,7 +19,9 @@ const SideBar: FC = (): JSX.Element => {
         )}
       </div>
 
-      <p className="SideBar__total-price">Цена: от 8 000 до 12 000 ₽</p>
+      <p className="SideBar__total-price">
+        <span className="SideBar__total-price_price">Цена: </span>от 8 000 до 12 000 ₽
+      </p>
 
       <div className="SideBar__btn">
         <Button

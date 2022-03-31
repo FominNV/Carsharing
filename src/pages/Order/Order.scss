@@ -22,6 +22,7 @@
   &__main {
     width: calc(100% - 320px);
     height: 100%;
+    padding: 32px 32px 32px 0;
 
     @media (max-width: $md) {
       width: 100%;
