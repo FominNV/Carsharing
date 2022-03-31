@@ -3,6 +3,7 @@
 .SideBar {
   width: 320px;
   height: calc(100% - 128px);
+  min-height: calc(100vh - 128px);
   padding: 32px 0 32px 32px;
   border-left: 1px solid $gray-light;
 
