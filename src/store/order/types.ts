@@ -1,8 +1,12 @@
 export interface IOrderState {
   place: {
-    city: string | null
-    street: string | null
+    city: Nullable<string>
+    street: Nullable<string>
   }
+}
+
+export interface OrderDispatch<T> {
+  (value: T): OrderAction
 }
 
 export enum OrderActionTypes {
@@ -12,12 +16,12 @@ export enum OrderActionTypes {
 
 type SetCityAction = {
   type: OrderActionTypes.SET_CITY
-  payload: { city: string | null }
+  payload: { city: Nullable<string> }
 }
 
 type SetStreetAction = {
   type: OrderActionTypes.SET_STREET
-  payload: { street: string | null }
+  payload: { street: Nullable<string> }
 }
 
 export type OrderAction = SetCityAction | SetStreetAction
