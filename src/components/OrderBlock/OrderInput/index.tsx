@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import classNames from "classnames"
 
 import { ReactComponent as Clear } from "assets/icons/OrderInput/clear.svg"
