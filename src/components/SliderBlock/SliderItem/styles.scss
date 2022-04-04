@@ -14,7 +14,7 @@
     opacity: 1;
   }
 
-  @media (max-width: $xl) {
+  @media (max-device-width: $xl) {
     padding: 0 64px;
     @include flex(_, center);
   }
@@ -36,7 +36,7 @@
     font: 500 40px/47px $roboto-medium;
     color: $white;
 
-    @media (max-width: $xl) {
+    @media (max-device-width: $xl) {
       font-size: 32px;
       line-height: 37.5px;
     }
@@ -47,7 +47,7 @@
     font: 300 24px/27px $roboto-light;
     color: $gray-light;
 
-    @media (max-width: $xl) {
+    @media (max-device-width: $xl) {
       font-size: 22px;
       line-height: 25px;
     }

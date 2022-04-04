@@ -5,7 +5,7 @@
   height: 64px;
   @include flex(center);
 
-  @media (max-width: $md) {
+  @media (max-device-width: $md) {
     height: 92px;
   }
 
@@ -15,7 +15,7 @@
     padding-top: 32px;
     @include flex(space-between);
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       @include flex(_, flex-end, column);
     }
   }

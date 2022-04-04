@@ -4,7 +4,7 @@
   margin-bottom: 12px;
   @include flex(_, flex-end);
 
-  @media (max-width: $md) {
+  @media (max-device-width: $md) {
     position: relative;
     width: 100%;
     max-width: 480px;
@@ -16,7 +16,7 @@
     color: $black;
     text-align: right;
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       width: 180px;
       font-size: 16px;
       line-height: 18px;
@@ -29,11 +29,11 @@
     height: 20px;
     box-sizing: border-box;
 
-    @media (max-width: $lg) {
+    @media (max-device-width: $lg) {
       width: 168px;
     }
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       position: static;
       width: 100%;
     }
@@ -54,7 +54,7 @@
       color: $gray;
     }
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       font-size: 16px;
       line-height: 18px;
     }
@@ -88,12 +88,12 @@
     z-index: 5;
     transition: all 0.25s;
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       font-size: 16px;
       line-height: 18px;
     }
 
-    @media (max-width: $tiny) {
+    @media (max-device-width: $tiny) {
       width: 180px;
     }
 

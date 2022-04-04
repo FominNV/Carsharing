@@ -11,11 +11,11 @@
   background: $black;
   z-index: 50;
 
-  @media (max-width: $xl) {
+  @media (max-device-width: $xl) {
     padding-left: 97px;
   }
 
-  @media (max-width: $md) {
+  @media (max-device-width: $md) {
     display: block;
     padding: 80px 28px 0;
   }
@@ -26,11 +26,11 @@
     width: 250px;
     @include flex(space-between, _, column);
 
-    @media (max-width: $lg) {
+    @media (max-device-width: $lg) {
       height: 177px;
     }
 
-    @media (max-width: $md) {
+    @media (max-device-width: $md) {
       height: 149px;
     }
 
@@ -45,12 +45,12 @@
         color: $green;
       }
 
-      @media (max-width: $lg) {
+      @media (max-device-width: $lg) {
         font-size: 28px;
         line-height: 33px;
       }
 
-      @media (max-width: $md) {
+      @media (max-device-width: $md) {
         font-size: 22px;
         line-height: 26px;
       }

@@ -7,7 +7,7 @@
   min-height: 100vh;
   flex: 1 2 calc($xl - 50%);
 
-  @media (max-width: $lg) {
+  @media (max-device-width: $lg) {
     display: none;
   }
 }
