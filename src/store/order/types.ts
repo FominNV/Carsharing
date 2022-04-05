@@ -5,9 +5,7 @@ export interface IOrderState {
   }
 }
 
-export interface OrderDispatch<T> {
-  (value: T): OrderAction
-}
+export type OrderDispatch<T> = (value: T) => OrderAction
 
 export enum OrderActionTypes {
   SET_CITY = "SET_CITY",

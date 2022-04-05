@@ -9,9 +9,7 @@ export enum CommonActionTypes {
   SET_DISPLAY_MENU = "SET_DISPLAY_MENU"
 }
 
-export interface CommonDispatch<T> {
-  (value: T): CommonAction
-}
+export type CommonDispatch<T> = (value: T) => CommonAction
 
 type SetLanguageAction = {
   type: CommonActionTypes.SET_LANGUAGE
