@@ -7,9 +7,18 @@ import { IDataPopupMenu } from "./types"
 const dataPopupMenu: IDataPopupMenu = {
   link: ["Парковка", "Страховка", "Бензин", "Обслуживание"],
   auth: [
-    <Ok width={32} height={32} />,
-    <Vk width={32} height={32} />,
-    <Tg width={32} height={32} />
+    <Ok
+      width={32}
+      height={32}
+    />,
+    <Vk
+      width={32}
+      height={32}
+    />,
+    <Tg
+      width={32}
+      height={32}
+    />
   ]
 }
 
