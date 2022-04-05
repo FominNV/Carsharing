@@ -18,11 +18,11 @@ const NavBar: FC = () => {
   const { showMenu, rusLang } = useTypedSelector((state) => state.common)
   const dispatch = useDispatch()
 
-  const toggleLanguage = useCallback<EventFunc<MouseEvent>>(() => {
+  const toggleLanguage = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
     dispatch(setLanguage(!rusLang))
   }, [dispatch, rusLang])
 
-  const toggleMenu = useCallback<EventFunc<MouseEvent>>(() => {
+  const toggleMenu = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
     dispatch(setDisplayMenu(!showMenu))
   }, [dispatch, showMenu])
 

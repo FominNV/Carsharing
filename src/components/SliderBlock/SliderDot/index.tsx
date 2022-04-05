@@ -6,7 +6,7 @@ import { ISliderDotProps } from "./types"
 import "./styles.scss"
 
 const SliderDot: FC<ISliderDotProps> = ({ slideIndex, setSlideIndex }) => {
-  const onclickHandler = useCallback<EventFunc<MouseEvent>>((e) => (
+  const onclickHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>((e) => (
     setSlideIndex(Number(e.currentTarget.dataset.key))
   ), [setSlideIndex])
 

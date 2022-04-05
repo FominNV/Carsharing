@@ -21,17 +21,17 @@ const OrderInput: FC<IOrderInputProps> = ({
 
   const input = useRef<HTMLInputElement | null>(null)
 
-  const onChangeHandler = useCallback<EventFunc<ChangeEventHandler>>((e) => {
+  const onChangeHandler = useCallback<EventFunc<React.ChangeEvent<HTMLInputElement>>>((e) => {
     setInnerValue(e.currentTarget.value)
   }, [])
 
-  const clearInputValue = useCallback<EventFunc<MouseEvent>>(() => {
+  const clearInputValue = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
     setInnerValue("")
     setState(null)
     input.current?.focus()
   }, [setState])
 
-  const onMouseDownHandler = useCallback<EventFunc<MouseEvent>>((e) => {
+  const onMouseDownHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>((e) => {
     if (e.currentTarget.name === "нет совпадений") {
       setShowDataBlock(false)
       return
@@ -41,16 +41,16 @@ const OrderInput: FC<IOrderInputProps> = ({
     setShowDataBlock(false)
   }, [])
 
-  const onFocusHandler = useCallback<EventFunc<FocusEvent>>(() => {
+  const onFocusHandler = useCallback<EventFunc<React.FocusEvent<HTMLInputElement>>>(() => {
     setShowDataBlock(true)
   }, [])
 
-  const onBlurHandler = useCallback<EventFunc<FocusEvent>>(() => {
+  const onBlurHandler = useCallback<EventFunc<React.FocusEvent<HTMLInputElement>>>(() => {
     setState(innerValue)
     setShowDataBlock(false)
   }, [setState, innerValue])
 
-  const onKeypressHandler = useCallback<EventFunc<KeyboardEvent>>((e) => {
+  const onKeypressHandler = useCallback<EventFunc<React.KeyboardEvent<HTMLInputElement>>>((e) => {
     if (e.key === "Enter") {
       setState(innerValue)
       setShowDataBlock(false)

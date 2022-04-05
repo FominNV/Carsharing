@@ -8,7 +8,7 @@ import { ISliderBtnProps } from "./types"
 import "./styles.scss"
 
 const SliderBtn: FC<ISliderBtnProps> = ({ direction, moveSlide }) => {
-  const onClickHandler = useCallback<EventFunc<MouseEvent>>(
+  const onClickHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(
     (e) => moveSlide(e),
     [moveSlide]
   )
