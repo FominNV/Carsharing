@@ -12,4 +12,6 @@
 
 Оптимизация изображений - Adobe Photoshop
 
+Оптимизация изображений - Adobe Photoshop
+
 Deploy [#Carsharing](https://fominnv.github.io/carsharing/)
