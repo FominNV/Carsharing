@@ -4,10 +4,6 @@
   width: 100%;
   height: 100%;
 
-  @media (max-device-width: $md) {
-    padding-top: 16px;
-  }
-
   &__inputs {
     width: fit-content;
     @include flex(_, flex-end, column);

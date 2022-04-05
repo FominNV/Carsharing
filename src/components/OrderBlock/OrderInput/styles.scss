@@ -8,6 +8,11 @@
     position: relative;
     width: 100%;
     max-width: 480px;
+    @include flex(flex-end, flex-end);
+  }
+
+  @media (max-device-width: $sm) {
+    display: block;
   }
 
   &__label {
@@ -15,11 +20,18 @@
     font: 300 14px/16px $roboto-light;
     color: $black;
     text-align: right;
+    justify-self: stretch;
+
 
     @media (max-device-width: $md) {
-      width: 180px;
       font-size: 16px;
       line-height: 18px;
+      white-space: nowrap;
+    }
+
+    @media (max-device-width: $sm) {
+      font-size: 14px;
+      line-height: 16px;
     }
   }
 
@@ -36,6 +48,13 @@
     @media (max-device-width: $md) {
       position: static;
       width: 100%;
+      max-width: 370px;
+    }
+
+    @media (max-device-width: $sm) {
+      position: relative;
+      max-width: none;
+      margin-top: 8px;
     }
   }
 
