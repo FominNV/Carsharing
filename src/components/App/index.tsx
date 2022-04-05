@@ -7,8 +7,14 @@ import "./styles.scss"
 
 const App: FC = () => (
   <Routes>
-    <Route path="/carsharing" element={<Main />} />
-    <Route path="/carsharing/order/:id" element={<Order />} />
+    <Route
+      path="/carsharing"
+      element={<Main />}
+    />
+    <Route
+      path="/carsharing/order/:id"
+      element={<Order />}
+    />
   </Routes>
 )
 
