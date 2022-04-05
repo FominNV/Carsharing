@@ -5,5 +5,5 @@ export interface ISliderItemProps {
   path: string
   title: string
   text: string
-  btnColor: ButtonBgColor
+  buttonColor: ButtonBgColor
 }
