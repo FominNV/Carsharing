@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react"
+import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import classNames from "classnames"
 
 import { ReactComponent as Clear } from "assets/icons/OrderInput/clear.svg"
-import { CreateDataBlock, IOrderInputProps } from "./types"
+import { IOrderInputProps } from "./types"
 
 import "./styles.scss"
 
@@ -12,26 +12,26 @@ const OrderInput: FC<IOrderInputProps> = ({
   value,
   defaultValue,
   placeholder,
-  searchData,
+  data,
   disabled,
   setState
 }) => {
   const [innerValue, setInnerValue] = useState<string>("")
-  const [filteredData, setFilteredData] = useState<string[] | null>(null)
   const [showDataBlock, setShowDataBlock] = useState<boolean>(false)
+
   const input = useRef<HTMLInputElement | null>(null)
 
-  const onChangeHandler: ChangeEventFunc<HTMLInputElement> = (e) => {
+  const onChangeHandler = useCallback<EventFunc<ChangeEventHandler>>((e) => {
     setInnerValue(e.currentTarget.value)
-  }
+  }, [])
 
-  const clearInputValue: MouseEventFunc<HTMLButtonElement> = () => {
+  const clearInputValue = useCallback<EventFunc<MouseEvent>>(() => {
     setInnerValue("")
     setState(null)
     input.current?.focus()
-  }
+  }, [setState])
 
-  const onMouseDownHandler: MouseEventFunc<HTMLButtonElement> = (e) => {
+  const onMouseDownHandler = useCallback<EventFunc<MouseEvent>>((e) => {
     if (e.currentTarget.name === "нет совпадений") {
       setShowDataBlock(false)
       return
@@ -39,46 +39,43 @@ const OrderInput: FC<IOrderInputProps> = ({
 
     setInnerValue(e.currentTarget.name)
     setShowDataBlock(false)
-  }
+  }, [])
 
-  const onFocusHandler: FocusEventFunc<HTMLInputElement> = () => {
+  const onFocusHandler = useCallback<EventFunc<FocusEvent>>(() => {
     setShowDataBlock(true)
-  }
+  }, [])
 
-  const onBlurHandler: FocusEventFunc<HTMLInputElement> = () => {
+  const onBlurHandler = useCallback<EventFunc<FocusEvent>>(() => {
     setState(innerValue)
     setShowDataBlock(false)
-  }
+  }, [setState, innerValue])
 
-  const onKeypressHandler: KeyboardEventFunc<HTMLInputElement> = (e) => {
+  const onKeypressHandler = useCallback<EventFunc<KeyboardEvent>>((e) => {
     if (e.key === "Enter") {
       setState(innerValue)
       setShowDataBlock(false)
     }
-  }
+  }, [setState, innerValue])
 
-  const createDataBlock: CreateDataBlock = (data) => {
-    return data.map((elem, index) => {
-      return (
-        <button
-          className="OrderInput__data-block__btn"
-          key={id + index}
-          name={elem}
-          onMouseDown={onMouseDownHandler}
-        >
-          {elem}
-        </button>
-      )
-    })
-  }
+  const dataList = useMemo<JSX.Element[]>(() => {
+    let resultData = data
 
-  const filterData: GenericFunc<string[]> = (data) => {
-    const filtered = data.filter((elem) => {
-      return elem.toLowerCase().includes(innerValue.toLowerCase())
-    })
+    if (innerValue) {
+      const filtered = data.filter((elem) => elem.toLowerCase().includes(innerValue.toLowerCase()))
+      resultData = (filtered.length > 0) ? filtered : ["нет совпадений"]
+    }
 
-    return filtered.length > 0 ? filtered : ["нет совпадений"]
-  }
+    return resultData.map((elem, index) => (
+      <button
+        className="OrderInput__data-block__btn"
+        key={id + index}
+        name={elem}
+        onMouseDown={onMouseDownHandler}
+      >
+        {elem}
+      </button>
+    ))
+  }, [data, innerValue, id, onMouseDownHandler])
 
   useEffect(() => {
     if (value) {
@@ -92,28 +89,19 @@ const OrderInput: FC<IOrderInputProps> = ({
     if (defaultValue) {
       setInnerValue(defaultValue)
     }
-  }, [])
+  }, [defaultValue])
 
-  useEffect(() => {
-    if (innerValue && searchData) {
-      setFilteredData(filterData(searchData))
-    } else if (!innerValue && searchData) {
-      setFilteredData(null)
-    }
-  }, [innerValue])
-
-  const btnClassName = classNames("OrderInput__btn", { OrderInput__btn_active: innerValue })
+  const clearButtonClassName = classNames("OrderInput__btn", { OrderInput__btn_active: innerValue })
   const dataBlockClassName = classNames("OrderInput__data-block", {
     "OrderInput__data-block_active": showDataBlock
   })
 
-  const dataList = filteredData
-    ? createDataBlock(filteredData)
-    : searchData && createDataBlock(searchData)
-
   return (
     <div className="OrderInput">
-      <label className="OrderInput__label" htmlFor={id}>
+      <label
+        className="OrderInput__label"
+        htmlFor={id}
+      >
         {label}
       </label>
 
@@ -133,7 +121,10 @@ const OrderInput: FC<IOrderInputProps> = ({
           disabled={disabled}
         />
 
-        <button className={btnClassName} onClick={clearInputValue}>
+        <button
+          className={clearButtonClassName}
+          onClick={clearInputValue}
+        >
           <Clear />
         </button>
 
@@ -143,4 +134,4 @@ const OrderInput: FC<IOrderInputProps> = ({
   )
 }
 
-export default React.memo(OrderInput)
+export default OrderInput
