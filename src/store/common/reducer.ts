@@ -2,7 +2,8 @@ import { CommonAction, CommonActionTypes, ICommonState } from "./types"
 
 const initialState: ICommonState = {
   showMenu: false,
-  rusLang: false
+  rusLang: false,
+  city: "Новосибирск"
 }
 
 export function commonReducer(
