@@ -4,6 +4,7 @@ import { useTypedSelector } from "store/selectors"
 import Container from "components/Container"
 
 import { ReactComponent as Map } from "assets/icons/Header/map.svg"
+import { PATHS } from "routes/consts"
 
 import "./styles.scss"
 
@@ -14,7 +15,10 @@ const Header: FC = () => {
     <header className="Header">
       <Container>
         <div className="Header__content">
-          <Link to="/carsharing" className="Header__logo">
+          <Link
+            to={PATHS.MAIN}
+            className="Header__logo"
+          >
             Need for drive
           </Link>
 
