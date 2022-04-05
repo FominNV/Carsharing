@@ -75,9 +75,13 @@
     "react/button-has-type": 0,
     "default-param-last": "off",
     "@typescript-eslint/default-param-last": "off",
-    "react/no-array-index-key": "off",
     "jsx-a11y/control-has-associated-label": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "array-callback-return": "off",
+    "react/no-array-index-key": "off",
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "always" }]
   },
   "settings": {
     "import/resolver": {

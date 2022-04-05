@@ -1,8 +1,8 @@
-import { CommonAction, CommonActionTypes } from "../types"
+import { CommonActionTypes, CommonDispatch } from "../types"
 
-export const setDisplayMenu = (bool: boolean): CommonAction => {
+export const setDisplayMenu: CommonDispatch<boolean> = (showMenu) => {
   return {
     type: CommonActionTypes.SET_DISPLAY_MENU,
-    payload: { showMenu: bool }
+    payload: { showMenu }
   }
 }
