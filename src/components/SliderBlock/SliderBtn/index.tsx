@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { FC, MouseEvent, useCallback, useMemo } from "react"
 import classNames from "classnames"
 
 import { ReactComponent as ArrowLeft } from "assets/icons/Slider/arrow-left.svg"
@@ -8,7 +8,7 @@ import { ISliderBtnProps } from "./types"
 import "./styles.scss"
 
 const SliderBtn: FC<ISliderBtnProps> = ({ direction, moveSlide }) => {
-  const onClickHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(
+  const onClickHandler = useCallback<EventFunc<MouseEvent<HTMLButtonElement>>>(
     (e) => moveSlide(e),
     [moveSlide]
   )

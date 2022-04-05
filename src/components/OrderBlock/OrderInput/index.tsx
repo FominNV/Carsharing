@@ -1,4 +1,15 @@
-import { ChangeEventHandler, FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  ChangeEvent,
+  FC,
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react"
 import classNames from "classnames"
 
 import { ReactComponent as Clear } from "assets/icons/OrderInput/clear.svg"
@@ -21,17 +32,22 @@ const OrderInput: FC<IOrderInputProps> = ({
 
   const input = useRef<HTMLInputElement | null>(null)
 
-  const onChangeHandler = useCallback<EventFunc<React.ChangeEvent<HTMLInputElement>>>((e) => {
-    setInnerValue(e.currentTarget.value)
-  }, [])
+  const onChangeHandler = useCallback<EventFunc<ChangeEvent<HTMLInputElement>>>(
+    (e) => {
+      setInnerValue(e.currentTarget.value)
+    },
+    []
+  )
 
-  const clearInputValue = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
+  const clearInputValue = useCallback<EventFunc<MouseEvent>>(() => {
     setInnerValue("")
     setState(null)
     input.current?.focus()
   }, [setState])
 
-  const onMouseDownHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>((e) => {
+  const onMouseDownHandler = useCallback<
+    EventFunc<MouseEvent<HTMLButtonElement>>
+  >((e) => {
     if (e.currentTarget.name === "нет совпадений") {
       setShowDataBlock(false)
       return
@@ -41,28 +57,34 @@ const OrderInput: FC<IOrderInputProps> = ({
     setShowDataBlock(false)
   }, [])
 
-  const onFocusHandler = useCallback<EventFunc<React.FocusEvent<HTMLInputElement>>>(() => {
+  const onFocusHandler = useCallback<EventFunc<FocusEvent>>(() => {
     setShowDataBlock(true)
   }, [])
 
-  const onBlurHandler = useCallback<EventFunc<React.FocusEvent<HTMLInputElement>>>(() => {
+  const onBlurHandler = useCallback<EventFunc<FocusEvent>>(() => {
     setState(innerValue)
     setShowDataBlock(false)
   }, [setState, innerValue])
 
-  const onKeypressHandler = useCallback<EventFunc<React.KeyboardEvent<HTMLInputElement>>>((e) => {
-    if (e.key === "Enter") {
-      setState(innerValue)
-      setShowDataBlock(false)
-    }
-  }, [setState, innerValue])
+  const onKeypressHandler = useCallback<
+    EventFunc<KeyboardEvent<HTMLInputElement>>
+  >(
+    (e) => {
+      if (e.key === "Enter") {
+        setState(innerValue)
+        setShowDataBlock(false)
+      }
+    },
+    [setState, innerValue]
+  )
 
   const dataList = useMemo<JSX.Element[]>(() => {
     let resultData = data
 
     if (innerValue) {
-      const filtered = data.filter((elem) => elem.toLowerCase().includes(innerValue.toLowerCase()))
-      resultData = (filtered.length > 0) ? filtered : ["нет совпадений"]
+      const filtered = data.filter((elem) =>
+        elem.toLowerCase().includes(innerValue.toLowerCase()))
+      resultData = filtered.length > 0 ? filtered : ["нет совпадений"]
     }
 
     return resultData.map((elem, index) => (
@@ -91,7 +113,9 @@ const OrderInput: FC<IOrderInputProps> = ({
     }
   }, [defaultValue])
 
-  const clearButtonClassName = classNames("OrderInput__btn", { OrderInput__btn_active: innerValue })
+  const clearButtonClassName = classNames("OrderInput__btn", {
+    OrderInput__btn_active: innerValue
+  })
   const dataBlockClassName = classNames("OrderInput__data-block", {
     "OrderInput__data-block_active": showDataBlock
   })

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { FC, MouseEvent, useCallback, useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "store/selectors"
 import { setLanguage } from "store/common/actions/setLanguage"
@@ -18,11 +18,11 @@ const NavBar: FC = () => {
   const { showMenu, rusLang } = useTypedSelector((state) => state.common)
   const dispatch = useDispatch()
 
-  const toggleLanguage = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
+  const toggleLanguage = useCallback<EventFunc<MouseEvent>>(() => {
     dispatch(setLanguage(!rusLang))
   }, [dispatch, rusLang])
 
-  const toggleMenu = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
+  const toggleMenu = useCallback<EventFunc<MouseEvent>>(() => {
     dispatch(setDisplayMenu(!showMenu))
   }, [dispatch, showMenu])
 

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react"
+import { FC, MouseEvent, useCallback, useMemo, useState } from "react"
 import { useTypedSelector } from "store/selectors"
 import SliderBtn from "components/SliderBlock/SliderBtn"
 import SliderDot from "components/SliderBlock/SliderDot"
@@ -12,7 +12,7 @@ const Slider: FC = () => {
   const { showMenu } = useTypedSelector((state) => state.common)
   const [slideIndex, setSlideIndex] = useState<number>(1)
 
-  const nextSlide = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
+  const nextSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== dataSlider.length) {
       setSlideIndex(slideIndex + 1)
     } else if (slideIndex === dataSlider.length) {
@@ -20,7 +20,7 @@ const Slider: FC = () => {
     }
   }, [slideIndex])
 
-  const prevSlide = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>(() => {
+  const prevSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== 1) {
       setSlideIndex(slideIndex - 1)
     } else if (slideIndex === 1) {

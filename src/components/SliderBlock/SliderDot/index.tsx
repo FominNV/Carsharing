@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react"
+import { FC, MouseEvent, useCallback, useMemo } from "react"
 import dataSlider from "components/SliderBlock/Slider/data"
 import classNames from "classnames"
 import { ISliderDotProps } from "./types"
@@ -6,7 +6,7 @@ import { ISliderDotProps } from "./types"
 import "./styles.scss"
 
 const SliderDot: FC<ISliderDotProps> = ({ slideIndex, setSlideIndex }) => {
-  const onclickHandler = useCallback<EventFunc<React.MouseEvent<HTMLButtonElement>>>((e) => (
+  const onclickHandler = useCallback<EventFunc<MouseEvent<HTMLButtonElement>>>((e) => (
     setSlideIndex(Number(e.currentTarget.dataset.key))
   ), [setSlideIndex])
 
