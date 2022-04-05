@@ -1,4 +1,5 @@
-import { Dispatch, ReactNode, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from "react"
+import { IDataOrderPlace } from "../Place/types"
 
 export interface IMapState {
   center: number[]
@@ -12,8 +13,8 @@ export interface IMarker {
 
 export interface IOrderMapProps {
   mapState: IMapState
-  markerData: IMarker[]
+  data: IDataOrderPlace[]
   setState: Dispatch<SetStateAction<Nullable<string>>>
 }
 
-export type CreateMarkers = (data: IMarker[]) => ReactNode
+export type CreateMarkersType = () => IMarker[]

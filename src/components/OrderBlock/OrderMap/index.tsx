@@ -1,12 +1,20 @@
-import React, { FC, useCallback } from "react"
-import { YMaps, Map, Placemark, FullscreenControl } from "react-yandex-maps"
+import { FC, useCallback, useMemo } from "react"
+import { YMaps, Map, Placemark, FullscreenControl, PlacemarkGeometry } from "react-yandex-maps"
 
 import marker from "assets/icons/OrderMap/marker.svg"
-import { CreateMarkers, IOrderMapProps } from "./types"
+import { CreateMarkersType, IMarker, IOrderMapProps } from "./types"
 
-const OrderMap: FC<IOrderMapProps> = ({ mapState, markerData, setState }) => {
-  const createMarkers: CreateMarkers = useCallback((data) => {
-    return data.map((elem, index) => (
+const OrderMap: FC<IOrderMapProps> = ({ mapState, data, setState }) => {
+  const createMarkers = useCallback<CreateMarkersType>(() => {
+    const array: IMarker[] = []
+    return data.reduce(
+      (prev, current) => prev.concat(current.streets.map((elem) => elem)),
+      array
+    )
+  }, [data])
+
+  const placeMarkers = useMemo<JSX.Element[]>(() => {
+    return createMarkers().map((elem, index) => (
       <Placemark
         geometry={elem.coord}
         onClick={() => setState(elem.name)}
@@ -19,13 +27,15 @@ const OrderMap: FC<IOrderMapProps> = ({ mapState, markerData, setState }) => {
         key={`Placemark_${index}`}
       />
     ))
-  }, [])
-
-  const placeMarkers = createMarkers(markerData)
+  }, [setState, createMarkers])
 
   return (
     <YMaps>
-      <Map state={mapState} width="100%" height={320}>
+      <Map
+        state={mapState}
+        width="100%"
+        height={320}
+      >
         <FullscreenControl />
         {placeMarkers}
       </Map>
@@ -33,4 +43,4 @@ const OrderMap: FC<IOrderMapProps> = ({ mapState, markerData, setState }) => {
   )
 }
 
-export default React.memo(OrderMap)
+export default OrderMap
