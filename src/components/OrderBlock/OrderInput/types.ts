@@ -6,9 +6,7 @@ export interface IOrderInputProps {
   value?: Nullable<string>
   defaultValue?: Nullable<string>
   placeholder?: string
-  searchData?: string[]
+  data: string[]
   disabled?: boolean
   setState: Dispatch<SetStateAction<Nullable<string>>>
 }
-
-export type CreateDataBlock = (arg: string[]) => ReactNode
