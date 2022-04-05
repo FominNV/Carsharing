@@ -80,7 +80,8 @@
     "react/jsx-one-expression-per-line": "off",
     "array-callback-return": "off",
     "react/no-array-index-key": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "always" }]
   },
   "settings": {
     "import/resolver": {
