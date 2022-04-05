@@ -14,6 +14,7 @@ const Order: FC = () => (
           <main className="Order__main">
             <Place />
           </main>
+
           <SideBar />
         </div>
       </Container>

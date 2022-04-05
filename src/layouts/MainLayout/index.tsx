@@ -11,6 +11,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children, title }) => (
     <Helmet>
       <title>{title}</title>
     </Helmet>
+
     <div className="MainLayout">
       <NavBar />
 
