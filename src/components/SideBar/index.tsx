@@ -1,7 +1,6 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { useTypedSelector } from "store/selectors"
 import { ButtonBgColor } from "components/Button/types"
-
 import Button from "components/Button"
 import OrderPoint from "../OrderBlock/OrderPoint"
 
@@ -10,9 +9,13 @@ import "./styles.scss"
 const SideBar: FC = () => {
   const { place } = useTypedSelector((state) => state.order)
 
-  const orderPlace = place.city && place.street && (
-    <OrderPoint title="Пункт выдачи" firstValue={`${place.city},`} secondValue={place.street} />
-  )
+  const orderPlace = useMemo<JSX.Element | null | "">(() => place.city && place.street && (
+    <OrderPoint
+      title="Пункт выдачи"
+      firstValue={`${place.city},`}
+      secondValue={place.street}
+    />
+  ), [place.city, place.street])
 
   return (
     <div className="SideBar">
@@ -25,7 +28,11 @@ const SideBar: FC = () => {
       </p>
 
       <div className="SideBar__btn">
-        <Button name="Выбрать модель" bgColor={ButtonBgColor.GREEN} disabled={!place.street} />
+        <Button
+          name="Выбрать модель"
+          bgColor={ButtonBgColor.GREEN}
+          disabled={!place.street}
+        />
       </div>
     </div>
   )

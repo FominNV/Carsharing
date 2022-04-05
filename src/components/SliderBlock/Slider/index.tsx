@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react"
+import { FC, useCallback, useMemo, useState } from "react"
 import { useTypedSelector } from "store/selectors"
 import SliderBtn from "components/SliderBlock/SliderBtn"
 import SliderDot from "components/SliderBlock/SliderDot"
@@ -12,7 +12,7 @@ const Slider: FC = () => {
   const { showMenu } = useTypedSelector((state) => state.common)
   const [slideIndex, setSlideIndex] = useState<number>(1)
 
-  const nextSlide: MouseEventFunc<HTMLButtonElement> = useCallback(() => {
+  const nextSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== dataSlider.length) {
       setSlideIndex(slideIndex + 1)
     } else if (slideIndex === dataSlider.length) {
@@ -20,7 +20,7 @@ const Slider: FC = () => {
     }
   }, [slideIndex])
 
-  const prevSlide: MouseEventFunc<HTMLButtonElement> = useCallback(() => {
+  const prevSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== 1) {
       setSlideIndex(slideIndex - 1)
     } else if (slideIndex === 1) {
@@ -28,28 +28,39 @@ const Slider: FC = () => {
     }
   }, [slideIndex])
 
-  const slides = dataSlider.map((elem, index) => (
+  const slides = useMemo<JSX.Element[]>(() => dataSlider.map((elem, index) => (
     <SliderItem
       active={index + 1 === slideIndex}
       key={`slide_${index}`}
       path={elem.imgPath}
       title={elem.title}
       text={elem.text}
-      btnColor={elem.btnColor}
+      buttonColor={elem.btnColor}
     />
-  ))
+  )), [slideIndex])
 
-  const popup = showMenu && <div className="Slider__popup" />
+  const popup = useMemo<JSX.Element | false>(() => (
+    showMenu && <div className="Slider__popup" />
+  ), [showMenu])
 
   return (
     <div className="Slider">
       {popup}
       {slides}
 
-      <SliderBtn moveSlide={nextSlide} direction="next" />
-      <SliderBtn moveSlide={prevSlide} direction="prev" />
+      <SliderBtn
+        moveSlide={nextSlide}
+        direction="next"
+      />
+      <SliderBtn
+        moveSlide={prevSlide}
+        direction="prev"
+      />
 
-      <SliderDot slideIndex={slideIndex} setSlideIndex={setSlideIndex} />
+      <SliderDot
+        slideIndex={slideIndex}
+        setSlideIndex={setSlideIndex}
+      />
     </div>
   )
 }

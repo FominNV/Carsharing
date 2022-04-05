@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import { FC, useCallback, useMemo } from "react"
 import classNames from "classnames"
 
 import { ReactComponent as ArrowLeft } from "assets/icons/Slider/arrow-left.svg"
@@ -8,26 +8,29 @@ import { ISliderBtnProps } from "./types"
 import "./styles.scss"
 
 const SliderBtn: FC<ISliderBtnProps> = ({ direction, moveSlide }) => {
-  const onClickHandler: MouseEventFunc<HTMLButtonElement> = useCallback(
-    (e) => {
-      moveSlide(e)
-    },
+  const onClickHandler = useCallback<EventFunc<MouseEvent>>(
+    (e) => moveSlide(e),
     [moveSlide]
   )
 
-  const btnClassName = classNames(
+  const buttonClassName = classNames(
     "SliderBtn",
     { SliderBtn_next: direction === "next" },
     { SliderBtn_prev: direction === "prev" }
   )
 
-  const icon = direction === "next" ? <ArrowRight /> : <ArrowLeft />
+  const icon = useMemo<JSX.Element>(() => (
+    direction === "next" ? <ArrowRight /> : <ArrowLeft />
+  ), [direction])
 
   return (
-    <button onClick={onClickHandler} className={btnClassName}>
+    <button
+      onClick={onClickHandler}
+      className={buttonClassName}
+    >
       {icon}
     </button>
   )
 }
 
-export default React.memo(SliderBtn)
+export default SliderBtn
