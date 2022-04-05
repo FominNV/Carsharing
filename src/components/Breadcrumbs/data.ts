@@ -1,25 +1,26 @@
+import { PATHS } from "routes/consts"
 import { IBreadcrumb } from "./types"
 
 const dataBreadcrumbs: IBreadcrumb[] = [
   {
-    id: "Breadcrumb_1",
+    id: "place",
     title: "Местоположение",
-    path: "place"
+    path: PATHS.ORDER_CAR
   },
   {
-    id: "Breadcrumb_2",
+    id: "car",
     title: "Модель",
-    path: "model"
+    path: PATHS.ORDER_CAR
   },
   {
-    id: "Breadcrumb_3",
+    id: "extra",
     title: "Дополнительно",
-    path: "extra"
+    path: PATHS.ORDER_EXTRA
   },
   {
-    id: "Breadcrumb_4",
+    id: "total",
     title: "Итого",
-    path: "total"
+    path: PATHS.ORDER_TOTAL
   }
 ]
 
