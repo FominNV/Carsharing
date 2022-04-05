@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react"
+import { FC, useCallback, useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "store/selectors"
 import { setLanguage } from "store/common/actions/setLanguage"
@@ -18,13 +18,13 @@ const NavBar: FC = () => {
   const { showMenu, rusLang } = useTypedSelector((state) => state.common)
   const dispatch = useDispatch()
 
-  const toggleLanguage: EventFunc<MouseEvent> = () => {
+  const toggleLanguage = useCallback<EventFunc<MouseEvent>>(() => {
     dispatch(setLanguage(!rusLang))
-  }
+  }, [dispatch, rusLang])
 
-  const toggleMenu: EventFunc<MouseEvent> = () => {
+  const toggleMenu = useCallback<EventFunc<MouseEvent>>(() => {
     dispatch(setDisplayMenu(!showMenu))
-  }
+  }, [dispatch, showMenu])
 
   const menuIcon = useMemo<JSX.Element>(() => (showMenu ? (
     <Close className="NavBar__menu_icon" />
