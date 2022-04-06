@@ -3,6 +3,7 @@ import { CommonAction, CommonActionTypes, ICommonState } from "./types"
 const initialState: ICommonState = {
   showMenu: false,
   rusLang: false,
+  loading: false,
   city: "Новосибирск"
 }
 
@@ -21,6 +22,12 @@ export function commonReducer(
       return {
         ...state,
         showMenu: action.payload.showMenu
+      }
+
+    case CommonActionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload.loading
       }
 
     default:

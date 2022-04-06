@@ -3,6 +3,7 @@
 .OrderPoint {
   position: relative;
   width: 100%;
+  margin-bottom: 16px;
   @include flex(space-between, flex-end);
   font: 300 14px/16px $roboto-light;
   color: $gray;
