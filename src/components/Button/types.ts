@@ -22,4 +22,5 @@ export interface IButtonProps {
   color?: ButtonColor
   borderRadius?: ButtonBorderRadius
   disabled?: boolean
+  navigatePath?: string
 }
