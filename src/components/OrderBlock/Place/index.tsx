@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "store/selectors"
-import { setPlaceCity, setPlaceStreet } from "store/order/actions"
+import { setLockOrderStep, setOrderCar, setPlaceCity, setPlaceStreet } from "store/order/actions"
 import { IMapState } from "components/OrderBlock/OrderMap/types"
 
 import OrderInput from "components/OrderBlock/OrderInput"
@@ -13,8 +13,8 @@ import "./styles.scss"
 
 const Place: FC = () => {
   const { order, common } = useTypedSelector((state) => state)
-  const [city, setCity] = useState<Nullable<string>>(common.city || null)
-  const [street, setStreet] = useState<Nullable<string>>(null)
+  const [city, setCity] = useState<Nullable<string>>(order.place.city || common.city || null)
+  const [street, setStreet] = useState<Nullable<string>>(order.place.street || null)
   const [mapState, setMapState] = useState<IMapState>({ center: [55.355198, 86.086847], zoom: 10 })
 
   const dispatch = useDispatch()
@@ -73,6 +73,7 @@ const Place: FC = () => {
     if (street) {
       setPlaceByStreet(street)
       showOrderPlaceOnMap(street)
+      dispatch(setLockOrderStep('car', true))
     } else {
       dispatch(setPlaceStreet(null))
     }
@@ -96,6 +97,15 @@ const Place: FC = () => {
       setCity(order.place.city)
     }
   }, [city, order.place.city])
+
+  useEffect(() => {
+    if (!order.place.street) {
+      dispatch(setOrderCar(null))
+      dispatch(setLockOrderStep('car', false))
+      dispatch(setLockOrderStep('extra', false))
+      dispatch(setLockOrderStep('total', false))
+    }
+  }, [dispatch, order.place.street])
 
   return (
     <div className="Place">
