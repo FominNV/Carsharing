@@ -1,8 +1,9 @@
 import { FC } from "react"
-import { ButtonBorderRadius, ButtonColor } from "components/Button/types"
 import Button from "components/Button"
 import classNames from "classnames"
 
+import { ButtonBorderRadius, ButtonColor } from "components/Button/types"
+import { PATHS } from "routes/consts"
 import { ISliderItemProps } from "./types"
 import "./styles.scss"
 
@@ -27,6 +28,7 @@ const SliderItem: FC<ISliderItemProps> = ({ active, path, title, text, buttonCol
             bgColor={buttonColor}
             color={ButtonColor.GRAY}
             borderRadius={ButtonBorderRadius.SMALL}
+            navigatePath={PATHS.ORDER_PLACE}
           />
         </div>
       </div>
