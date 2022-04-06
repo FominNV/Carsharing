@@ -1,20 +1,29 @@
 import { FC, useMemo } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useTypedSelector } from "store/selectors"
 import Container from "components/Container"
 import classNames from "classnames"
 
 import { ReactComponent as Triangle } from "assets/icons/Breadcrumbs/triangle.svg"
+import { IUnlockeOrderStep } from "store/order/types"
 import dataBreadcrumbs from "./data"
 
 import "./styles.scss"
 
 const Breadcrumbs: FC = () => {
+  const { order } = useTypedSelector((state) => state)
   const params = useParams()
 
   const links = useMemo<JSX.Element[]>(() => dataBreadcrumbs.map((elem, index) => {
-    const itemClassName = classNames("Breadcrumbs__item", {
-      Breadcrumbs__item_active: params.id === elem.id
-    })
+    const itemClassName = classNames(
+      "Breadcrumbs__item",
+      {
+        Breadcrumbs__item_active: params.id === elem.id
+      },
+      {
+        Breadcrumbs__item_disabled: !order.unlockedStep[elem.id]
+      }
+    )
 
     return (
       <Link
@@ -28,7 +37,7 @@ const Breadcrumbs: FC = () => {
         </div>
       </Link>
     )
-  }), [params.id])
+  }), [params.id, order])
 
   return (
     <div className="Breadcrumbs">

@@ -41,10 +41,16 @@
 
     &_active {
       color: $green;
+      cursor: default;
     }
 
     &_active ~ a {
       color: $gray;
+      cursor: default;
+    }
+
+    &_disabled {
+      pointer-events: none;
     }
   }
 
