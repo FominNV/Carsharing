@@ -29,7 +29,7 @@ const CarList: FC = () => {
     return result
   }, [])
 
-  const createRadios = useCallback<CreateRadiosType>((data) =>
+  const createModelRadios = useCallback<CreateRadiosType>((data) =>
     data.map((elem, index) => (
       <OrderRadio
         id={`radio_car_${index}`}
@@ -41,12 +41,12 @@ const CarList: FC = () => {
       />
     )), [])
 
-  const radios = useMemo<ReactNode>(
-    () => car.cars.all && createRadios(createRadioData(car.cars.all)),
-    [car.cars.all, createRadios, createRadioData]
+  const modelRadios = useMemo<ReactNode>(
+    () => car.cars.all && createModelRadios(createRadioData(car.cars.all)),
+    [car.cars.all, createModelRadios, createRadioData]
   )
 
-  const loadCars = useCallback<LoadCarsType>(async () => {
+  const fetchCars = useCallback<LoadCarsType>(async () => {
     dispatch(setLoading(true))
     await dispatch(getCars())
     dispatch(setLoading(false))
@@ -90,9 +90,9 @@ const CarList: FC = () => {
 
   useEffect(() => {
     if (!car.cars.all) {
-      loadCars()
+      fetchCars()
     }
-  }, [loadCars, car.cars.all])
+  }, [fetchCars, car.cars.all])
 
   useEffect(() => {
     if (order.car) {
@@ -122,7 +122,7 @@ const CarList: FC = () => {
         className="CarList__radios"
         defaultValue="all"
       >
-        {radios}
+        {modelRadios}
       </fieldset>
 
       <div className="CarList__cars">
