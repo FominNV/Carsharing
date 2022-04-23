@@ -55,6 +55,7 @@
 
   &:disabled {
     background: $gray-light;
+    cursor: auto;
   }
 
   &:disabled:hover,
@@ -72,6 +73,12 @@
     height: 100%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.25s;
+  }
+
+  &__loading {
+    width: 100%;
+    height: 100%;
+    @include flex(center, center);
   }
 
   &__name {
