@@ -92,7 +92,7 @@ const Place: FC = () => {
       dispatch(setLoading(true))
       dispatch(getPoints())
     }
-  }, [])
+  }, [location.points, params.id, dispatch])
 
   useEffect(() => {
     if (location.points && params.id === "place") {
