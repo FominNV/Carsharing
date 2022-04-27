@@ -26,12 +26,11 @@ const Main: FC = () => (
               <p className="Main__tagline3">Поминутная аренда авто твоего города</p>
 
               <div className="Main__btn">
-                <Link to={PATHS.ORDER_PLACE}>
-                  <Button
-                    name="Забронировать"
-                    bgColor={ButtonBgColor.GREEN}
-                  />
-                </Link>
+                <Button
+                  name="Забронировать"
+                  bgColor={ButtonBgColor.GREEN}
+                  navigatePath={PATHS.ORDER_PLACE}
+                />
               </div>
             </div>
           </Container>
