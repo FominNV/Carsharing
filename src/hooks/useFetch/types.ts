@@ -1,5 +1,6 @@
 import { ICar, ICategory } from "store/car/types"
 import { IPoint } from "store/location/types"
+import { IRate } from "store/rate/types"
 
 export interface IFetchOptions {
   method: FetchMethod
@@ -10,7 +11,7 @@ export interface IFetchOptions {
 }
 
 export interface IFetchData {
-  data: ICar[] | ICategory[] | IPoint[]
+  data: ICar[] | ICategory[] | IPoint[] | IRate[]
 }
 
 export interface IFetchState {
