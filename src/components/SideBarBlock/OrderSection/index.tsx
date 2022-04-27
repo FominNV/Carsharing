@@ -4,14 +4,16 @@ import { useTypedSelector } from "store/selectors"
 import OrderPoint from "components/OrderBlock/OrderPoint"
 import Button from "components/Button"
 import classNames from "classnames"
-import { ButtonBgColor } from "components/Button/types"
 import useFormatNumber from "hooks/useFormatNumber"
+import { IOrderExtra } from "store/order/types"
+import { ButtonBgColor } from "components/Button/types"
 import dataOrderButtons from "./data"
+import { dataOrderExtra } from "../SideBar/data"
 
 import "./styles.scss"
 
 const OrderSection: FC = () => {
-  const { place, car, unlockedStep } = useTypedSelector((state) => state.order)
+  const { place, car, extra, price, unlockedStep } = useTypedSelector((state) => state.order)
   const params = useParams()
 
   const orderPlace = useMemo<ReactNode>(() => {
@@ -44,6 +46,53 @@ const OrderSection: FC = () => {
     return null
   }, [car])
 
+  const carColor = useMemo<ReactNode>(() => {
+    const orderColor = extra && extra.color
+    if (orderColor) {
+      return (
+        <OrderPoint
+          title="Цвет"
+          key="order_color"
+          noWrapValue={orderColor}
+        />
+      )
+    }
+    return null
+  }, [extra])
+
+  const orderTerm = useMemo<ReactNode>(() => {
+    const term = extra && extra.term && extra.term
+    if (term) {
+      return (
+        <OrderPoint
+          title="Длительность аренды"
+          key="order_term"
+          noWrapValue={term}
+        />
+      )
+    }
+    return null
+  }, [extra])
+
+  const orderExtraServices = useMemo<ReactNode>(
+    () =>
+      extra &&
+      dataOrderExtra.map((elem, index) => {
+        const orderExtraData = extra as IOrderExtra
+        if (orderExtraData[elem.id]) {
+          return (
+            <OrderPoint
+              title={elem.title}
+              key={`order_extra_${index}`}
+              noWrapValue={elem.value}
+            />
+          )
+        }
+        return null
+      }),
+    [extra]
+  )
+
   const orderButtons = useMemo<ReactNode>(
     () =>
       dataOrderButtons.map((elem, index) => {
@@ -71,9 +120,9 @@ const OrderSection: FC = () => {
   )
 
   const orderPrice = useMemo<ReactNode>(() => {
-    const currentPrice = (
-      car && `от ${useFormatNumber(car.priceMin)} до ${useFormatNumber(car.priceMax)} ₽`
-    )
+    const currentPrice = price
+      ? `${price} ₽`
+      : car && `от ${useFormatNumber(car.priceMin)} до ${useFormatNumber(car.priceMax)} ₽`
 
     if (currentPrice) {
       return (
@@ -89,13 +138,16 @@ const OrderSection: FC = () => {
       )
     }
     return null
-  }, [car])
+  }, [car, price])
 
   return (
     <section className="SideBarSection">
       <div className="SideBarSection__order-points">
         {orderPlace}
         {orderCar}
+        {carColor}
+        {orderTerm}
+        {orderExtraServices}
       </div>
 
       <p className="SideBarSection__total-price">{orderPrice}</p>
