@@ -1,12 +1,14 @@
 export interface ICommonState {
-  showMenu: boolean
+  menuPopup: boolean
   rusLang: boolean
+  loading: boolean
   city: string
 }
 
 export enum CommonActionTypes {
   SET_LANGUAGE = "SET_LANGUAGE",
-  SET_DISPLAY_MENU = "SET_DISPLAY_MENU"
+  SHOW_MENU_POPUP = "SHOW_MENU_POPUP",
+  SET_LOADING = "SET_LOADING",
 }
 
 export type CommonDispatch<T> = (value: T) => CommonAction
@@ -16,9 +18,14 @@ type SetLanguageAction = {
   payload: { rusLang: boolean }
 }
 
-type SetDisplayMenuAction = {
-  type: CommonActionTypes.SET_DISPLAY_MENU
-  payload: { showMenu: boolean }
+type ShowMenuPopupAction = {
+  type: CommonActionTypes.SHOW_MENU_POPUP
+  payload: { menuPopup: boolean }
 }
 
-export type CommonAction = SetLanguageAction | SetDisplayMenuAction
+type SetLoadingAction = {
+  type: CommonActionTypes.SET_LOADING
+  payload: { loading: boolean }
+}
+
+export type CommonAction = SetLanguageAction | ShowMenuPopupAction | SetLoadingAction

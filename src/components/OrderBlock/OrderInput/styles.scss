@@ -73,6 +73,11 @@
       color: $gray;
     }
 
+    &:disabled {
+      background-color: $gray-high-light;
+      cursor: default;
+    }
+
     @media (max-device-width: $md) {
       font-size: 16px;
       line-height: 18px;

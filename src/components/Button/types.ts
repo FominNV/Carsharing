@@ -1,3 +1,5 @@
+import { MouseEvent } from "react"
+
 export enum ButtonBgColor {
   GREEN = "green",
   GREEN_DARK = "greenDark",
@@ -22,4 +24,7 @@ export interface IButtonProps {
   color?: ButtonColor
   borderRadius?: ButtonBorderRadius
   disabled?: boolean
+  navigatePath?: string
+  loading?: boolean
+  onClick?: EventFunc<MouseEvent>
 }

@@ -34,7 +34,7 @@
       }
     ],
     "max-len": ["warn", { "code": 100 }],
-    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/rules-of-hooks": "off",
     "react-hooks/exhaustive-deps": "warn",
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
@@ -81,6 +81,7 @@
     "array-callback-return": "off",
     "react/no-array-index-key": "off",
     "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
     "react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "always" }]
   },
   "settings": {

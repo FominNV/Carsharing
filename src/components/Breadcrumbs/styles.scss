@@ -7,6 +7,7 @@
   @include flex(center);
   border-top: 1px solid $gray-light;
   border-bottom: 1px solid $gray-light;
+  
 
   @media (max-device-width: $md) {
     height: fit-content;
@@ -19,6 +20,10 @@
     flex-wrap: wrap;
   }
 
+  &__order-number {
+    font: 700 14px/16px $roboto-bold;
+  }
+
   &__item {
     height: 100%;
     margin-right: 16px;
@@ -26,6 +31,7 @@
     font: 700 14px/16px $roboto-bold;
     color: $black;
     text-decoration: none;
+    cursor: pointer;
 
     @media (max-device-width: $md) {
       height: 20px;
@@ -41,10 +47,13 @@
 
     &_active {
       color: $green;
+      cursor: default;
     }
 
-    &_active ~ a {
+    &_disabled {
       color: $gray;
+      pointer-events: none;
+      cursor: default;
     }
   }
 
