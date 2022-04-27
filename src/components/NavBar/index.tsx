@@ -1,8 +1,7 @@
-import { FC, MouseEvent, useCallback, useMemo } from "react"
+import { FC, MouseEvent, ReactNode, useCallback, useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "store/selectors"
-import { setLanguage } from "store/common/actions/setLanguage"
-import { setDisplayMenu } from "store/common/actions/setDisplayMenu"
+import { setLanguage, showMenuPopup } from "store/common/actions"
 import PopupMenu from "components/Popups/PopupMenu"
 import classNames from "classnames"
 
@@ -15,7 +14,7 @@ import { ReactComponent as Circle } from "assets/icons/NavBar/circle.svg"
 import "./styles.scss"
 
 const NavBar: FC = () => {
-  const { showMenu, rusLang } = useTypedSelector((state) => state.common)
+  const { menuPopup, rusLang } = useTypedSelector((state) => state.common)
   const dispatch = useDispatch()
 
   const toggleLanguage = useCallback<EventFunc<MouseEvent>>(() => {
@@ -23,20 +22,24 @@ const NavBar: FC = () => {
   }, [dispatch, rusLang])
 
   const toggleMenu = useCallback<EventFunc<MouseEvent>>(() => {
-    dispatch(setDisplayMenu(!showMenu))
-  }, [dispatch, showMenu])
+    dispatch(showMenuPopup(!menuPopup))
+  }, [dispatch, menuPopup])
 
-  const menuIcon = useMemo<JSX.Element>(() => (showMenu ? (
-    <Close className="NavBar__menu_icon" />
-  ) : (
-    <Burger className="NavBar__menu_icon" />
-  )), [showMenu])
+  const menuIcon = useMemo<ReactNode>(
+    () =>
+      (menuPopup ? (
+        <Close className="NavBar__menu_icon" />
+      ) : (
+        <Burger className="NavBar__menu_icon" />
+      )),
+    [menuPopup]
+  )
 
-  const langIcon = useMemo<JSX.Element>(() => (rusLang ? <Rus /> : <Eng />), [rusLang])
-  const popuMenu = useMemo<JSX.Element | false>(() => (showMenu && <PopupMenu />), [showMenu])
+  const langIcon = useMemo<ReactNode>(() => (rusLang ? <Rus /> : <Eng />), [rusLang])
+  const popuMenu = useMemo<ReactNode>(() => menuPopup && <PopupMenu />, [menuPopup])
 
-  const navbarClassName = classNames("NavBar__menu", { NavBar__menu_active: showMenu })
-  const langClassName = classNames("NavBar__lang", { NavBar__lang_active: showMenu })
+  const navbarClassName = classNames("NavBar__menu", { NavBar__menu_active: menuPopup })
+  const langClassName = classNames("NavBar__lang", { NavBar__lang_active: menuPopup })
 
   return (
     <>

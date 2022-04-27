@@ -25,25 +25,4 @@
     color: $black;
     text-align: right;
   }
-
-  &__order-points {
-    width: 100%;
-    margin-top: 26px;
-  }
-
-  &__total-price {
-    width: 100%;
-    margin-top: 32px;
-    font: 400 16px/16px $roboto-regular;
-
-    &_price {
-      font: 500 16px/16px $roboto-medium;
-    }
-  }
-
-  &__btn {
-    width: 100%;
-    height: 48px;
-    margin-top: 32px;
-  }
 }

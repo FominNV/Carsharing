@@ -39,7 +39,7 @@ const OrderInput: FC<IOrderInputProps> = ({
     []
   )
 
-  const clearInputValue = useCallback<EventFunc<MouseEvent>>(() => {
+  const clearInputValue = useCallback<EventFunc<MouseEvent>>((e) => {
     setInnerValue("")
     setState(null)
     input.current?.focus()
@@ -102,7 +102,7 @@ const OrderInput: FC<IOrderInputProps> = ({
   useEffect(() => {
     if (value) {
       setInnerValue(value)
-    } else if (value === null) {
+    } else {
       setInnerValue("")
     }
   }, [value])

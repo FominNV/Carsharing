@@ -5,7 +5,7 @@ const dataBreadcrumbs: IBreadcrumb[] = [
   {
     id: "place",
     title: "Местоположение",
-    path: PATHS.ORDER_CAR
+    path: PATHS.ORDER_PLACE
   },
   {
     id: "car",

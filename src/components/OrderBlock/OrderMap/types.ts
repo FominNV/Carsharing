@@ -1,20 +1,13 @@
 import { Dispatch, SetStateAction } from "react"
-import { IDataOrderPlace } from "../Place/types"
+import { IGeoCoordinate } from "../Steps/Place/types"
 
 export interface IMapState {
   center: number[]
   zoom: number
 }
 
-export interface IMarker {
-  name: string
-  coord: number[]
-}
-
 export interface IOrderMapProps {
   mapState: IMapState
-  data: IDataOrderPlace[]
+  dataGeo: IGeoCoordinate[]
   setState: Dispatch<SetStateAction<Nullable<string>>>
 }
-
-export type CreateMarkersType = () => IMarker[]
