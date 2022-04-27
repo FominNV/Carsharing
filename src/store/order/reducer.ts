@@ -6,6 +6,9 @@ const initialState: IOrderState = {
     street: null
   },
   car: null,
+  extra: null,
+  date: null,
+  price: null,
   unlockedStep: {
     place: true,
     car: false,
@@ -32,6 +35,24 @@ export function orderReducer(state: IOrderState = initialState, action: OrderAct
       return {
         ...state,
         car: action.payload.car
+      }
+
+    case OrderActionTypes.SET_ORDER_EXTRA:
+      return {
+        ...state,
+        extra: action.payload.extra
+      }
+
+    case OrderActionTypes.SET_ORDER_DATE:
+      return {
+        ...state,
+        date: action.payload.date
+      }
+
+    case OrderActionTypes.SET_ORDER_PRICE:
+      return {
+        ...state,
+        price: action.payload.price
       }
 
     case OrderActionTypes.SET_LOCK_STEP:
