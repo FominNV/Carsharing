@@ -1,27 +1,39 @@
-import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react"
-import { useParams } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { useTypedSelector } from "store/selectors"
-import { setLockOrderStep, setOrderCar, setPlaceCity, setPlaceStreet } from "store/order/actions"
-import { setLoading } from "store/common/actions"
-import { IMapState } from "components/OrderBlock/OrderMap/types"
-import { getPoints } from "store/location/actions"
-import useCoordinates from "hooks/useCoordinates"
-import OrderInput from "components/OrderBlock/OrderInput"
-import OrderMap from "components/OrderBlock/OrderMap"
-import Loading from "components/Loading"
-import { IPoint } from "store/location/types"
-import { IGeoCoordinate, showOnMapType } from "./types"
+import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useTypedSelector } from 'store/selectors'
+import {
+  setLockOrderStep,
+  setOrderCar,
+  setPlaceCity,
+  setPlaceStreet
+} from 'store/order/actions'
+import { setError, setLoading } from 'store/common/actions'
+import { IMapState } from 'components/OrderBlock/OrderMap/types'
+import { getPoints, setLocationError } from 'store/location/actions'
+import useCoordinates from 'hooks/useCoordinates'
+import OrderInput from 'components/OrderBlock/OrderInput'
+import OrderMap from 'components/OrderBlock/OrderMap'
+import Loading from 'components/Loading'
+import { IPoint } from 'store/location/types'
+import { IGeoCoordinate, showOnMapType } from './types'
 
-import "./styles.scss"
+import './styles.scss'
 
 const Place: FC = () => {
   const { order, common, location } = useTypedSelector((state) => state)
-  const [city, setCity] = useState<Nullable<string>>(order.place.city?.name || common.city || null)
-  const [street, setStreet] = useState<Nullable<string>>(order.place.street?.address || null)
+  const [city, setCity] = useState<Nullable<string>>(
+    order.place.city?.name || common.city || null
+  )
+  const [street, setStreet] = useState<Nullable<string>>(
+    order.place.street?.address || null
+  )
   const [streetGeo, setStreetGeo] = useState<Nullable<IGeoCoordinate[]>>(null)
   const [cityGeo, setCityGeo] = useState<Nullable<IGeoCoordinate[]>>(null)
-  const [mapState, setMapState] = useState<IMapState>({ center: [55.355198, 86.086847], zoom: 10 })
+  const [mapState, setMapState] = useState<IMapState>({
+    center: [55.355198, 86.086847],
+    zoom: 10
+  })
 
   const params = useParams()
   const dispatch = useDispatch()
@@ -30,8 +42,11 @@ const Place: FC = () => {
     const geoStreets = await Promise.all(
       data.map(async (elem) => {
         const cityName = elem.cityId.name
-        const streetName = elem.address.split(",")[0].replace(/^ул\./, "").trim()
-        const arrayAddress = elem.address.split(" ")
+        const streetName = elem.address
+          .split(',')[0]
+          .replace(/^ул\./, '')
+          .trim()
+        const arrayAddress = elem.address.split(' ')
         const numberValue = arrayAddress[arrayAddress.length - 1]
         const address = `${cityName}+${streetName}+${numberValue}`
         const coordinates = await useCoordinates(address)
@@ -88,20 +103,20 @@ const Place: FC = () => {
   )
 
   useEffect(() => {
-    if (!location.points && params.id === "place") {
+    if (!location.points && params.id === 'place') {
       dispatch(setLoading(true))
       dispatch(getPoints())
     }
   }, [location.points, params.id, dispatch])
 
   useEffect(() => {
-    if (location.points && params.id === "place") {
+    if (location.points && params.id === 'place') {
       setCoordinateStates(location.points)
     }
   }, [location.points, params.id, setCoordinateStates])
 
   useEffect(() => {
-    if (cityGeo && params.id === "place") {
+    if (cityGeo && params.id === 'place') {
       dispatch(setLoading(false))
     }
   }, [cityGeo, params.id, dispatch])
@@ -110,7 +125,7 @@ const Place: FC = () => {
     if (street && streetGeo) {
       setPlaceByStreet(street)
       showOrderPlaceOnMap(street, streetGeo)
-      dispatch(setLockOrderStep("car", true))
+      dispatch(setLockOrderStep('car', true))
     } else {
       dispatch(setPlaceStreet(null))
     }
@@ -136,18 +151,35 @@ const Place: FC = () => {
   }, [city, order.place.city])
 
   useEffect(() => {
+    if (location.error) {
+      dispatch(setLocationError(false))
+      dispatch(setError({
+        number: 500,
+        message: "Ошибка сервера при загрузке геолокаций."
+      }))
+    }
+  }, [location.error, dispatch])
+
+  useEffect(() => {
     if (!order.place.street) {
       dispatch(setOrderCar(null))
-      dispatch(setLockOrderStep("car", false))
-      dispatch(setLockOrderStep("extra", false))
-      dispatch(setLockOrderStep("total", false))
+      dispatch(setLockOrderStep('car', false))
+      dispatch(setLockOrderStep('extra', false))
+      dispatch(setLockOrderStep('total', false))
     }
   }, [dispatch, order.place.street])
 
-  const cityData = useMemo<string[]>(
-    () => (location.points ? location.points.map((elem) => elem.cityId?.name) : []),
-    [location.points]
-  )
+  const cityData = useMemo<string[]>(() => {
+    const cities: string[] = []
+    if (location.points) {
+      location.points.map((elem) => {
+        if (!cities.includes(elem.cityId?.name)) {
+          cities.push(elem.cityId?.name)
+        }
+      })
+    }
+    return cities
+  }, [location.points])
 
   const streetData = useMemo<string[]>(() => {
     if (location.points) {
@@ -160,13 +192,14 @@ const Place: FC = () => {
   }, [city, location.points])
 
   const map = useMemo<ReactNode>(
-    () => streetGeo && (
-    <OrderMap
-      mapState={mapState}
-      dataGeo={streetGeo}
-      setState={setStreet}
-    />
-    ),
+    () =>
+      streetGeo && (
+        <OrderMap
+          mapState={mapState}
+          dataGeo={streetGeo}
+          setState={setStreet}
+        />
+      ),
     [streetGeo, mapState]
   )
 

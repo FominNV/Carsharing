@@ -12,6 +12,7 @@ import "./styles.scss"
 
 const Order: FC = () => {
   const { place } = useTypedSelector((state) => state.order)
+  const { error } = useTypedSelector((state) => state.common)
   const params = useParams()
   const location = useLocation()
   const navigate = useNavigate()
@@ -40,6 +41,12 @@ const Order: FC = () => {
       navigate(PATHS.ORDER_PLACE)
     }
   }, [])
+
+  useEffect(() => {
+    if (error) {
+      navigate(PATHS.ERROR)
+    }
+  }, [error, navigate])
 
   return (
     <OrderLayout title="NFS / Заказать">

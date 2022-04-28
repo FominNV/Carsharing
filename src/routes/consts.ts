@@ -3,5 +3,6 @@ export const PATHS = {
   ORDER_PLACE: '/carsharing/order/place',
   ORDER_CAR: '/carsharing/order/car',
   ORDER_EXTRA: '/carsharing/order/extra',
-  ORDER_TOTAL: '/carsharing/order/total'
+  ORDER_TOTAL: '/carsharing/order/total',
+  ERROR: '/carsharing/error/'
 }

@@ -2,7 +2,7 @@ import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import { useTypedSelector } from "store/selectors"
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
-import { getRates, setCurrentRate } from "store/rate/actions"
+import { getRates, setCurrentRate, setRateError } from "store/rate/actions"
 import { setOrderDate, setLockOrderStep, setOrderExtra, setOrderPrice } from "store/order/actions"
 import { format, hoursToMilliseconds } from "date-fns"
 import OrderDate from "components/OrderBlock/OrderDate"
@@ -10,6 +10,7 @@ import OrderRadio from "components/OrderBlock/OrderRadio"
 import OrderCheckbox from "components/OrderBlock/OrderCheckbox"
 import classNames from "classnames"
 import useTern from "hooks/useTerm"
+import { setError } from "store/common/actions"
 import { dataAddService } from "./data"
 import { CalcOrderPriceType, CheckDatesType, SetOrderDatesType } from "./types"
 
@@ -154,8 +155,22 @@ const Extra: FC = () => {
   }, [order.date])
 
   useEffect(() => {
-    dispatch(getRates())
-  }, [dispatch])
+    if (!rate.all && params.id === "extra") {
+      dispatch(getRates())
+    }
+  }, [rate, params.id, dispatch])
+
+  useEffect(() => {
+    if (rate.error && params.id === "extra") {
+      dispatch(setRateError(false))
+      setTimeout(() => {
+        dispatch(setError({
+          number: 500,
+          message: "Ошибка сервера при загрузке тарифов."
+        }))
+      })
+    }
+  }, [rate.error, params.id, dispatch])
 
   const colorRadios = useMemo<ReactNode>(
     () =>

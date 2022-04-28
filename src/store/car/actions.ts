@@ -4,48 +4,55 @@ import { Dispatch } from "react"
 import { CarAction, CarActionTypes, CarDispatch, ICar, ICategory } from "./types"
 
 export const getCars = () => async (dispatch: Dispatch<CarAction>) => {
-  const fetchOptions = {
-    method: FetchMethod.GET,
-    headers: {
-      "X-Api-Factory-Application-Id": process.env.REACT_APP_API_KEY as string
-    }
-  }
-
-  const { data, error } = await useFetch(URLS.CAR_URL, fetchOptions)
+  const { data, error, status500 } = await useFetch(URLS.CAR_URL, { method: FetchMethod.GET })
 
   if (error) {
-    throw new Error("Can't get cars...")
+    console.error("Can't get cars...")
   }
 
-  dispatch({
-    type: CarActionTypes.GET_CARS,
-    payload: { cars: data?.data as ICar[] }
-  })
+  if (status500) {
+    dispatch({
+      type: CarActionTypes.GET_CARS,
+      payload: { cars: null, error: true }
+    })
+  } else {
+    dispatch({
+      type: CarActionTypes.GET_CARS,
+      payload: { cars: data?.data as ICar[], error: false }
+    })
+  }
 }
 
 export const getCategories = () => async (dispatch: Dispatch<CarAction>) => {
-  const fetchOptions = {
-    method: FetchMethod.GET,
-    headers: {
-      "X-Api-Factory-Application-Id": process.env.REACT_APP_API_KEY as string
-    }
-  }
-
-  const { data, error } = await useFetch(URLS.CATEGORY_URL, fetchOptions)
+  const { data, error, status500 } = await useFetch(URLS.CATEGORY_URL, { method: FetchMethod.GET })
 
   if (error) {
-    throw new Error("Can't get categories...")
+    console.error("Can't get categories...")
   }
 
-  dispatch({
-    type: CarActionTypes.GET_CATEGORIES,
-    payload: { categories: data?.data as ICategory[] }
-  })
+  if (status500) {
+    dispatch({
+      type: CarActionTypes.GET_CATEGORIES,
+      payload: { categories: null, error: true }
+    })
+  } else {
+    dispatch({
+      type: CarActionTypes.GET_CATEGORIES,
+      payload: { categories: data?.data as ICategory[], error: false }
+    })
+  }
 }
 
 export const setCurrentCategory: CarDispatch<ICategory> = (current) => {
   return {
     type: CarActionTypes.SET_CURRENT_CATEGORY,
     payload: { current }
+  }
+}
+
+export const setCarError: CarDispatch<boolean> = (error) => {
+  return {
+    type: CarActionTypes.SET_CAR_ERROR,
+    payload: { error }
   }
 }
