@@ -6,6 +6,11 @@
   background: $white;
   @include flex;
 
+  &_scrollbar-none {
+    height: 100vh;
+    overflow: hidden;
+  }
+
   &__main {
     width: 100%;
     height: calc(100% - (64px + 48px));
