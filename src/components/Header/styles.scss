@@ -26,6 +26,10 @@
     font: 700 30px $roboto-bold;
     color: $green;
     text-decoration: none;
+
+    &:hover {
+      animation: jello-horizontal 0.5s 1 normal;
+    }
   }
 
   &__city {
