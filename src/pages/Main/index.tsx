@@ -1,5 +1,7 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useTypedSelector } from "store/selectors"
+import { useDispatch } from "react-redux"
+import { setPageTitle } from "store/common/actions"
 import Button from "components/Button"
 import Footer from "components/Footer"
 import MainLayout from "layouts/MainLayout"
@@ -16,6 +18,12 @@ import "./styles.scss"
 
 const Main: FC = () => {
   const { menuPopup } = useTypedSelector((state) => state.common)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setPageTitle("NFD / Главная"))
+  }, [dispatch])
+
   const mainClassname = classNames("Main", {
     "Main_scrollbar-none": menuPopup
   })
@@ -23,7 +31,7 @@ const Main: FC = () => {
   return (
     <div className={mainClassname}>
       <LandSection>
-        <MainLayout title="NFD">
+        <MainLayout>
           <main className="Main__main">
             <Container>
               <div className="Main__content">
