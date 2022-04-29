@@ -4,7 +4,8 @@ const initialState: ICommonState = {
   menuPopup: false,
   rusLang: false,
   loading: false,
-  city: "Екатеринбург"
+  city: "Екатеринбург",
+  error: null
 }
 
 export function commonReducer(
@@ -28,6 +29,12 @@ export function commonReducer(
       return {
         ...state,
         loading: action.payload.loading
+      }
+
+    case CommonActionTypes.SET_ERROR:
+      return {
+        ...state,
+        error: action.payload.error
       }
 
     default:

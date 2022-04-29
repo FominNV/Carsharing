@@ -6,6 +6,7 @@ export interface ICarState {
     all: Nullable<ICategory[]>
     current: Nullable<ICategory>
   }
+  error: boolean
 }
 
 export interface ICar {
@@ -43,17 +44,18 @@ export type CarDispatch<T> = (value: T) => CarAction
 export enum CarActionTypes {
   GET_CARS = "GET_CARS",
   GET_CATEGORIES = "GET_CATEGORIES",
-  SET_CURRENT_CATEGORY = "SET_CURRENT_CATEGORY"
+  SET_CURRENT_CATEGORY = "SET_CURRENT_CATEGORY",
+  SET_CAR_ERROR = "SET_CAR_ERROR"
 }
 
 type GetCarsAction = {
   type: CarActionTypes.GET_CARS
-  payload: { cars: ICar[] }
+  payload: { cars: Nullable<ICar[]>, error: boolean }
 }
 
 type GetCategoriesAction = {
   type: CarActionTypes.GET_CATEGORIES
-  payload: { categories: ICategory[] }
+  payload: { categories: Nullable<ICategory[]>, error: boolean }
 }
 
 type SetCurrentCategoryAction = {
@@ -61,7 +63,13 @@ type SetCurrentCategoryAction = {
   payload: { current: ICategory }
 }
 
+type SetCarErrorAction = {
+  type: CarActionTypes.SET_CAR_ERROR
+  payload: { error: boolean }
+}
+
 export type CarAction =
   | GetCarsAction
   | GetCategoriesAction
   | SetCurrentCategoryAction
+  | SetCarErrorAction
