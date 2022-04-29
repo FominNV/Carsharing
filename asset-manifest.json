@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/carsharing/static/css/main.fe4d49c1.css",
-    "main.js": "/carsharing/static/js/main.8ebbe6e1.js",
+    "main.css": "/carsharing/static/css/main.76a3fda0.css",
+    "main.js": "/carsharing/static/js/main.c897f336.js",
     "static/media/Roboto-Medium.ttf": "/carsharing/static/media/Roboto-Medium.7429a63c09f79a1760b0.ttf",
     "static/media/Roboto-Regular.ttf": "/carsharing/static/media/Roboto-Regular.a8d6ac03c7b96b7acb62.ttf",
     "static/media/Roboto-Bold.ttf": "/carsharing/static/media/Roboto-Bold.75371f53f06181df75f1.ttf",
@@ -15,7 +15,7 @@
     "static/media/vk.svg": "/carsharing/static/media/vk.c311d8680f334ab0a8e2e3cbe4e31823.svg",
     "static/media/telegram.svg": "/carsharing/static/media/telegram.b8d251bd3169516b00beef3c32446630.svg",
     "static/media/ok.svg": "/carsharing/static/media/ok.95151c85dcdcda2848aa1cf90445401d.svg",
-    "static/media/sadness.svg": "/carsharing/static/media/sadness.0d50a0f08abf042bb497831ae123ee59.svg",
+    "static/media/sadness.svg": "/carsharing/static/media/sadness.ffc0ec80c35ada7d880f000008e73ac1.svg",
     "static/media/map.svg": "/carsharing/static/media/map.19ac7717bce4dcda3acad5a73b634cf5.svg",
     "static/media/menu_btn.svg": "/carsharing/static/media/menu_btn.58d5b3cf1c82853073bd83d96e62110a.svg",
     "index.html": "/carsharing/index.html",
@@ -27,11 +27,11 @@
     "static/media/marker.svg": "/carsharing/static/media/marker.457e906945276fb0758a989660dd3bc9.svg",
     "static/media/circle.svg": "/carsharing/static/media/circle.717e28f7f56b5c8420d16f713541c2ee.svg",
     "static/media/triangle.svg": "/carsharing/static/media/triangle.ce81e7425fdbcb8e18e8475e250c5da8.svg",
-    "main.fe4d49c1.css.map": "/carsharing/static/css/main.fe4d49c1.css.map",
-    "main.8ebbe6e1.js.map": "/carsharing/static/js/main.8ebbe6e1.js.map"
+    "main.76a3fda0.css.map": "/carsharing/static/css/main.76a3fda0.css.map",
+    "main.c897f336.js.map": "/carsharing/static/js/main.c897f336.js.map"
   },
   "entrypoints": [
-    "static/css/main.fe4d49c1.css",
-    "static/js/main.8ebbe6e1.js"
+    "static/css/main.76a3fda0.css",
+    "static/js/main.c897f336.js"
   ]
 }
