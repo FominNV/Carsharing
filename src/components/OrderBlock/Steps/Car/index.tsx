@@ -2,9 +2,9 @@ import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import { useTypedSelector } from "store/selectors"
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
-import { setLoading } from "store/common/actions"
+import { setError, setLoading } from "store/common/actions"
 import { setLockOrderStep } from "store/order/actions"
-import { getCars, getCategories } from "store/car/actions"
+import { getCars, getCategories, setCarError } from "store/car/actions"
 import Loading from "components/Loading"
 import OrderRadio from "components/OrderBlock/OrderRadio"
 import { LoadCarsType } from "./types"
@@ -13,7 +13,7 @@ import OrderCarCard from "../../OrderCarCard"
 import "./styles.scss"
 
 const Car: FC = () => {
-  const { cars, category } = useTypedSelector((state) => state.car)
+  const { cars, category, error } = useTypedSelector((state) => state.car)
   const { car } = useTypedSelector((state) => state.order)
   const { loading } = useTypedSelector((state) => state.common)
   const [filterCars, setFilterCars] = useState<string>("Все модели")
@@ -37,6 +37,16 @@ const Car: FC = () => {
       dispatch(setLockOrderStep("extra", true))
     }
   }, [dispatch, car])
+
+  useEffect(() => {
+    if (error && params.id === "car") {
+      dispatch(setCarError(false))
+      dispatch(setError({
+        number: 500,
+        message: "Ошибка сервера при загрузке транспорта."
+      }))
+    }
+  }, [error, dispatch])
 
   const categoryRadios = useMemo<ReactNode>(
     () =>

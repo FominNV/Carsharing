@@ -2,7 +2,8 @@ import { ILocationState, LocationAction, LocationActionTypes } from "./types"
 
 const initialState: ILocationState = {
   cities: null,
-  points: null
+  points: null,
+  error: false
 }
 
 export function locationReducer(
@@ -13,7 +14,15 @@ export function locationReducer(
     case LocationActionTypes.GET_POINTS: {
       return {
         ...state,
-        points: action.payload.points
+        points: action.payload.points,
+        error: action.payload.error
+      }
+    }
+
+    case LocationActionTypes.SET_LOCATION_ERROR: {
+      return {
+        ...state,
+        error: action.payload.error
       }
     }
 
