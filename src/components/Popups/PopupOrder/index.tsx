@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useTypedSelector } from "store/selectors"
 import { setLoading, showOrderPopup } from "store/common/actions"
-import { postOrder } from "store/order/actions"
+import { postOrder, setOrder, setOrdered } from "store/order/actions"
 import Button from "components/Button"
 import { PATHS } from "routes/consts"
 import { ButtonBgColor, ButtonBorderRadius } from "components/Button/types"
@@ -33,6 +33,9 @@ const PopupOrder: FC = () => {
   const confirmOrder = useCallback<EventFunc<MouseEvent>>(() => {
     const currentOrder = ordered as IOrdered
     const currentStatus = status.confirm as IOrderStatus
+    if (ordered && ordered.orderStatusId.name === 'Подтвержденные') {
+      localStorage.setItem('nfd_ordered_id', ordered?.id)
+    }
     const url = PATHS.ORDER + (ordered?.id as string)
     changeOrderStatus(currentOrder, currentStatus, url)
   }, [ordered, status.confirm, changeOrderStatus])
@@ -40,8 +43,11 @@ const PopupOrder: FC = () => {
   const cancelOrder = useCallback<EventFunc<MouseEvent>>(() => {
     const currentOrder = ordered as IOrdered
     const currentStatus = status.cancel as IOrderStatus
+    localStorage.removeItem('nfd_ordered_id')
+    dispatch(setOrder(null))
+    dispatch(setOrdered(null))
     changeOrderStatus(currentOrder, currentStatus, PATHS.ORDER_CANCELED)
-  }, [ordered, status.cancel, changeOrderStatus])
+  }, [ordered, status.cancel, changeOrderStatus, dispatch])
 
   const closePopup = useCallback<EventFunc<MouseEvent>>(() => {
     dispatch(showOrderPopup(false))
