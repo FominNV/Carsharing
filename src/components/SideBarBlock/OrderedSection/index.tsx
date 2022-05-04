@@ -113,7 +113,7 @@ const OrderedSection: FC = () => {
         <div className="SideBarSection__btn SideBarSection__btn_active">
           <Button
             name="Отменить"
-            bgColor={ButtonBgColor.PURPLE}
+            bgColor={ButtonBgColor.BROWN_RED}
             key="ordered_btn"
             onClick={onClickHandler}
           />
