@@ -14,7 +14,17 @@ const initialState: IOrderState = {
     car: false,
     extra: false,
     total: false
-  }
+  },
+  total: null,
+  order: null,
+  ordered: null,
+  status: {
+    all: null,
+    new: null,
+    confirm: null,
+    cancel: null
+  },
+  error: false
 }
 
 export function orderReducer(state: IOrderState = initialState, action: OrderAction): IOrderState {
@@ -62,6 +72,51 @@ export function orderReducer(state: IOrderState = initialState, action: OrderAct
           ...state.unlockedStep,
           [action.payload.key]: action.payload.lock
         }
+      }
+
+    case OrderActionTypes.SET_ORDER:
+      return {
+        ...state,
+        order: action.payload.order
+      }
+
+    case OrderActionTypes.SET_ORDERED:
+      return {
+        ...state,
+        ordered: action.payload.ordered
+      }
+
+    case OrderActionTypes.POST_ORDER:
+      return {
+        ...state,
+        ordered: action.payload.ordered,
+        error: action.payload.error
+      }
+
+    case OrderActionTypes.GET_ORDER:
+      return {
+        ...state,
+        ordered: action.payload.ordered,
+        error: action.payload.error
+      }
+
+    case OrderActionTypes.GET_ORDER_STATUSES:
+      return {
+        ...state,
+        status: { ...state.status, all: action.payload.statuses },
+        error: action.payload.error
+      }
+
+    case OrderActionTypes.SET_ORDER_STATUS:
+      return {
+        ...state,
+        status: { ...state.status, [action.payload.key]: action.payload.status }
+      }
+
+    case OrderActionTypes.SET_ORDER_ERROR:
+      return {
+        ...state,
+        error: action.payload.error
       }
 
     default:

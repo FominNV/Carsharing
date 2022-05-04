@@ -1,7 +1,7 @@
 import { IFetchState, UseFetchType } from './types'
 
 const useFetch: UseFetchType = async (url, option) => {
-  const { method, headers } = option
+  const { method, headers, body } = option
   const state: IFetchState = {
     data: null,
     error: null,
@@ -14,7 +14,8 @@ const useFetch: UseFetchType = async (url, option) => {
       headers: {
         'X-Api-Factory-Application-Id': process.env.REACT_APP_API_KEY as string,
         ...headers
-      }
+      },
+      body
     })
     if (response.status === 500) state.status500 = true
     if (!response.ok) throw new Error(response.statusText)

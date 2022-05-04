@@ -1,14 +1,16 @@
 import { ICar, ICategory } from 'store/car/types'
 import { IPoint } from 'store/location/types'
+import { IOrdered, IOrderStatuses } from 'store/order/types'
 import { IRate } from 'store/rate/types'
 
 export interface IFetchOptions {
   method: FetchMethod
   headers?: { [index: string]: string }
+  body?: BodyInit
 }
 
 export interface IFetchData {
-  data: ICar[] | ICategory[] | IPoint[] | IRate[]
+  data: ICar[] | ICategory[] | IPoint[] | IRate[] | IOrderStatuses[] | IOrdered
 }
 
 export interface IFetchState {
