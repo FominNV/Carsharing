@@ -94,21 +94,6 @@ const Order: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (ordered && ordered.orderStatusId.name === 'Подтвержденные') {
-      localStorage.setItem('nfd_ordered_id', ordered.id)
-    }
-  }, [ordered, dispatch])
-
-  useEffect(() => {
-    if (ordered && ordered.orderStatusId.name === 'Отмененые') {
-      localStorage.removeItem('nfd_ordered_id')
-      dispatch(setOrder(null))
-      dispatch(setOrdered(null))
-      navigate(PATHS.ORDER_CANCELED)
-    }
-  }, [ordered, dispatch, navigate])
-
-  useEffect(() => {
     if (!status.all) {
       dispatch(getOrderStatuses())
     }
