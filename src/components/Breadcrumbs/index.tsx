@@ -10,7 +10,7 @@ import dataBreadcrumbs from "./data"
 import "./styles.scss"
 
 const Breadcrumbs: FC = () => {
-  const { unlockedStep } = useTypedSelector((state) => state.order)
+  const { unlockedStep, ordered } = useTypedSelector((state) => state.order)
   const params = useParams()
 
   const links = useMemo<JSX.Element[]>(
@@ -42,10 +42,20 @@ const Breadcrumbs: FC = () => {
     [params.id, unlockedStep]
   )
 
+  const confirmed = useMemo(() => (
+    ordered && params.id === ordered.id && (
+      <p className="Breadcrumbs__order-number">Заказ номер {ordered.id}</p>
+    )
+  ), [params, ordered])
+
+  const content = useMemo(() => (
+    confirmed || links
+  ), [confirmed, links])
+
   return (
     <div className="Breadcrumbs">
       <Container>
-        <div className="Breadcrumbs__content">{links}</div>
+        <div className="Breadcrumbs__content">{content}</div>
       </Container>
     </div>
   )

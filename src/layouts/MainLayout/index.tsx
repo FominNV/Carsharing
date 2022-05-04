@@ -4,19 +4,19 @@ import { useTypedSelector } from "store/selectors"
 import Header from "components/Header"
 import NavBar from "components/NavBar"
 import classNames from "classnames"
-import { IMainLayoutProps } from "./types"
 
 import "./styles.scss"
 
-const MainLayout: FC<IMainLayoutProps> = ({ children, title }) => {
-  const { menuPopup } = useTypedSelector((state) => state.common)
+const MainLayout: FC = ({ children }) => {
+  const { menuPopup, orderPopup, pageTitle } = useTypedSelector((state) => state.common)
   const mainLayoutClassname = classNames("MainLayout", {
-    "MainLayout_scrollbar-none": menuPopup
+    "MainLayout_scrollbar-none": menuPopup || orderPopup
   })
+
   return (
     <>
       <Helmet>
-        <title>{title}</title>
+        <title>{pageTitle}</title>
       </Helmet>
 
       <div className={mainLayoutClassname}>

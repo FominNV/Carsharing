@@ -1,11 +1,14 @@
-import { FC, ReactNode, useMemo } from "react"
-import { useParams } from "react-router-dom"
+import { FC, MouseEvent, ReactNode, useCallback, useMemo } from "react"
 import { useTypedSelector } from "store/selectors"
+import { useDispatch } from "react-redux"
+import { useParams } from "react-router-dom"
+import { postOrder } from "store/order/actions"
+import { setLoading, showOrderPopup } from "store/common/actions"
 import OrderPoint from "components/OrderBlock/OrderPoint"
 import Button from "components/Button"
 import classNames from "classnames"
 import useFormatNumber from "hooks/useFormatNumber"
-import { IOrderExtra } from "store/order/types"
+import { IOrder, IOrderExtra } from "store/order/types"
 import { ButtonBgColor } from "components/Button/types"
 import dataOrderButtons from "./data"
 import { dataOrderExtra } from "../SideBar/data"
@@ -13,8 +16,16 @@ import { dataOrderExtra } from "../SideBar/data"
 import "./styles.scss"
 
 const OrderSection: FC = () => {
-  const { place, car, extra, price, unlockedStep } = useTypedSelector((state) => state.order)
+  const { order, place, car, extra, price, unlockedStep } = useTypedSelector((state) => state.order)
   const params = useParams()
+  const dispatch = useDispatch()
+
+  const fetchNewOrder = useCallback<EventFunc<MouseEvent>>(async () => {
+    dispatch(setLoading(true))
+    dispatch(showOrderPopup(true))
+    await dispatch(postOrder(order as IOrder))
+    dispatch(setLoading(false))
+  }, [order, dispatch])
 
   const orderPlace = useMemo<ReactNode>(() => {
     const city = place.city && place.city.name
@@ -100,6 +111,7 @@ const OrderSection: FC = () => {
           SideBarSection__btn_active: params.id === elem.id
         })
         const disabled = !unlockedStep[elem.unlockStep]
+        const onClick = elem.name === "Заказать" ? fetchNewOrder : undefined
 
         return (
           <div
@@ -112,11 +124,12 @@ const OrderSection: FC = () => {
               disabled={disabled}
               key={elem.id + index}
               navigatePath={elem.path}
+              onClick={onClick}
             />
           </div>
         )
       }),
-    [params.id, unlockedStep]
+    [params.id, unlockedStep, fetchNewOrder]
   )
 
   const orderPrice = useMemo<ReactNode>(() => {
