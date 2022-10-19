@@ -7,9 +7,8 @@
   @include flex(center);
   border-top: 1px solid $gray-light;
   border-bottom: 1px solid $gray-light;
-  
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     height: fit-content;
   }
 
@@ -33,7 +32,7 @@
     text-decoration: none;
     cursor: pointer;
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       height: 20px;
       margin: 8px 16px 8px 0;
       @include flex(space-between, center);
@@ -41,7 +40,7 @@
       line-height: 18px;
     }
 
-    @media (max-device-width: $tiny) {
+    @media (max-device-width: $tiny), (max-width: $tiny) {
       width: 180px;
     }
 

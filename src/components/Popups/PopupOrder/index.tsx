@@ -1,66 +1,71 @@
-import { FC, MouseEvent, useCallback } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { useTypedSelector } from "store/selectors"
-import { setLoading, showOrderPopup } from "store/common/actions"
-import { postOrder, setOrder, setOrdered } from "store/order/actions"
-import Button from "components/Button"
-import { PATHS } from "routes/consts"
-import { ButtonBgColor, ButtonBorderRadius } from "components/Button/types"
-import { IOrdered, IOrderStatus } from "store/order/types"
-import { ChangeOrderStatusType } from "./types"
+import { FC, MouseEvent, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useTypedSelector } from "store/selectors";
+import { setLoading, showOrderPopup } from "store/common/actions";
+import { postOrder } from "store/user/actions";
+import { PATHS } from "routes/consts";
+import { OrderButtonBgColor, OrderButtonBorderRadius } from "components/UI/OrderButton/types";
+import OrderButton from "components/UI/OrderButton";
+import { OrderStatusType } from "store/user/types";
+import { OrderStepId } from "pages/OrderPage/types";
+import { URLS } from "api/Axios/data";
+import { ChangeOrderStatusType } from "./types";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const PopupOrder: FC = () => {
-  const { ordered, status } = useTypedSelector((state) => state.order)
-  const { loading } = useTypedSelector((state) => state.common)
-  const params = useParams()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const { orderStatuses } = useTypedSelector((state) => state.user);
+  const { postedOrder } = useTypedSelector((state) => state.user);
+  const { loading } = useTypedSelector((state) => state.common);
+  const params = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeOrderStatus = useCallback<ChangeOrderStatusType>(
-    async (order, currentStatus, path) => {
-      dispatch(setLoading(true))
-      await dispatch(postOrder({ ...order, orderStatusId: currentStatus }))
-      dispatch(showOrderPopup(false))
-      navigate(path)
-      dispatch(setLoading(false))
+    async (order, orderStatusId, path) => {
+      dispatch(setLoading(true));
+      const url = `${URLS.ORDER_URL}?statusId=${orderStatusId}`;
+      await dispatch(postOrder(url as URLS, order));
+      dispatch(showOrderPopup(false));
+      navigate(path);
+      dispatch(setLoading(false));
     },
-    [navigate, dispatch]
-  )
+    [navigate, dispatch],
+  );
 
-  const confirmOrder = useCallback<EventFunc<MouseEvent>>(() => {
-    const currentOrder = ordered as IOrdered
-    const currentStatus = status.confirm as IOrderStatus
-    if (ordered && ordered.orderStatusId.name === 'Подтвержденные') {
-      localStorage.setItem('nfd_ordered_id', ordered?.id)
+  const confirmOrder = useCallback<EventFunc<MouseEvent>>(async () => {
+    if (orderStatuses.confirm && postedOrder) {
+      const url = `${PATHS.ORDER}${postedOrder.id}`;
+      changeOrderStatus(postedOrder, orderStatuses.confirm.id, url);
     }
-    const url = PATHS.ORDER + (ordered?.id as string)
-    changeOrderStatus(currentOrder, currentStatus, url)
-  }, [ordered, status.confirm, changeOrderStatus])
+  }, [orderStatuses.confirm, postedOrder, changeOrderStatus]);
 
-  const cancelOrder = useCallback<EventFunc<MouseEvent>>(() => {
-    const currentOrder = ordered as IOrdered
-    const currentStatus = status.cancel as IOrderStatus
-    localStorage.removeItem('nfd_ordered_id')
-    dispatch(setOrder(null))
-    dispatch(setOrdered(null))
-    changeOrderStatus(currentOrder, currentStatus, PATHS.ORDER_CANCELED)
-  }, [ordered, status.cancel, changeOrderStatus, dispatch])
+  const cancelOrder = useCallback<EventFunc<MouseEvent>>(async () => {
+    if (orderStatuses.cancel && postedOrder) {
+      const url = `${PATHS.ORDER}${postedOrder.id}`;
+      await changeOrderStatus(postedOrder, orderStatuses.cancel.id, url);
+      localStorage.removeItem("nfd_ordered_id");
+      navigate(PATHS.ORDER_CANCELED);
+    }
+  }, [orderStatuses.cancel, postedOrder, changeOrderStatus, navigate]);
 
   const closePopup = useCallback<EventFunc<MouseEvent>>(() => {
-    dispatch(showOrderPopup(false))
-  }, [dispatch])
+    dispatch(showOrderPopup(false));
+  }, [dispatch]);
 
-  const buttonName =
-    (ordered && ordered.orderStatusId.name === "Новые" && "Подтвердить") || "Отменить"
-  const popupTitle =
-    (params.id === "total" && "Подтвердить заказ") || "Отменить заказ"
-  const postAction =
-    (ordered && ordered.orderStatusId.name === "Новые" && confirmOrder) ||
-    (ordered && ordered.orderStatusId.name === "Подтвержденные" && cancelOrder) ||
-    undefined
+  const buttonName =    (postedOrder
+      && postedOrder.orderStatusId.name === OrderStatusType.NEW
+      && "Подтвердить")
+    || "Отменить";
+  const popupTitle = (params.id === OrderStepId.TOTAL && "Подтвердить заказ") || "Отменить заказ";
+  const postAction =    (postedOrder
+      && postedOrder.orderStatusId.name === OrderStatusType.NEW
+      && confirmOrder)
+    || (postedOrder
+      && postedOrder.orderStatusId.name === OrderStatusType.CONFIRM
+      && cancelOrder)
+    || undefined;
 
   return (
     <div className="PopupOrder">
@@ -71,27 +76,27 @@ const PopupOrder: FC = () => {
         <div className="PopupOrder__title">{popupTitle}</div>
         <div className="PopupOrder__buttons">
           <div className="PopupOrder__buttons__confirm-cancel">
-            <Button
+            <OrderButton
               name={buttonName}
-              bgColor={ButtonBgColor.GREEN}
-              borderRadius={ButtonBorderRadius.SMALL}
+              bgColor={OrderButtonBgColor.GREEN}
+              borderRadius={OrderButtonBorderRadius.SMALL}
               disabled={loading}
               loading={loading}
               onClick={postAction}
             />
           </div>
           <div className="PopupOrder__buttons__cancel">
-            <Button
+            <OrderButton
               name="Вернуться"
-              bgColor={ButtonBgColor.BROWN_RED}
-              borderRadius={ButtonBorderRadius.SMALL}
+              bgColor={OrderButtonBgColor.BROWN_RED}
+              borderRadius={OrderButtonBorderRadius.SMALL}
               onClick={closePopup}
             />
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PopupOrder
+export default PopupOrder;

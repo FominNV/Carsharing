@@ -1,21 +1,21 @@
-import { IServiceItem } from "./types"
+import { IServiceItem } from "./types";
 
 const dataServiceItems: IServiceItem[] = [
   {
     id: "isFullTank",
     title: "Топливо",
-    value: "100%"
+    value: "100%",
   },
   {
     id: "isNeedChildChair",
     title: "Детское кресло",
-    value: "в наличие"
+    value: "в наличие",
   },
   {
     id: "isRightWheel",
     title: "Правый руль",
-    value: "обязателен"
-  }
-]
+    value: "обязателен",
+  },
+];
 
-export default dataServiceItems
+export default dataServiceItems;

@@ -1,14 +1,19 @@
-import { FC } from "react"
-import { ButtonBorderRadius, ButtonColor } from "components/Button/types"
-import Button from "components/Button"
-import classNames from "classnames"
+import { FC } from "react";
+import {
+  OrderButtonBorderRadius,
+  OrderButtonColor,
+} from "components/UI/OrderButton/types";
+import OrderButton from "components/UI/OrderButton";
+import classNames from "classnames";
 
-import { PATHS } from "routes/consts"
-import { ISliderItemProps } from "./types"
-import "./styles.scss"
+import { PATHS } from "routes/consts";
+import { ISliderItemProps } from "./types";
+import "./styles.scss";
 
-const SliderItem: FC<ISliderItemProps> = ({ active, path, title, text, buttonColor }) => {
-  const itemClassName = classNames("SliderItem", { SliderItem_active: active })
+const SliderItem: FC<ISliderItemProps> = ({
+  active, path, title, text, buttonColor,
+}) => {
+  const itemClassName = classNames("SliderItem", { SliderItem_active: active });
 
   return (
     <div className={itemClassName}>
@@ -23,17 +28,17 @@ const SliderItem: FC<ISliderItemProps> = ({ active, path, title, text, buttonCol
         <p className="SliderItem__text">{text}</p>
 
         <div className="SliderItem__btn">
-          <Button
+          <OrderButton
             name="Подробнее"
             bgColor={buttonColor}
-            color={ButtonColor.GRAY}
-            borderRadius={ButtonBorderRadius.SMALL}
+            color={OrderButtonColor.GRAY}
+            borderRadius={OrderButtonBorderRadius.SMALL}
             navigatePath={PATHS.ORDER_PLACE}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SliderItem
+export default SliderItem;

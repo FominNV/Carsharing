@@ -1,9 +1,9 @@
-import { FC } from "react"
+import { FC } from "react";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const LandSection: FC = ({ children }) => (
   <section className="LandSection">{children}</section>
-)
+);
 
-export default LandSection
+export default LandSection;

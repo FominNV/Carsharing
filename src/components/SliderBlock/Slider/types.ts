@@ -1,8 +1,8 @@
-import { ButtonBgColor } from "components/Button/types"
+import { OrderButtonBgColor } from "components/UI/OrderButton/types";
 
 export interface IDataSlider {
-  imgPath: string
-  title: string
-  text: string
-  btnColor: ButtonBgColor
+  imgPath: string;
+  title: string;
+  text: string;
+  btnColor: OrderButtonBgColor;
 }

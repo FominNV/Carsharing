@@ -21,11 +21,11 @@
     flex-wrap: wrap;
     overflow-y: auto;
 
-    @media (max-device-width: $lg) {
+    @media (max-device-width: $lg), (max-width: $lg) {
       margin-top: 32px;
     }
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       margin-top: 16px;
     }
   }

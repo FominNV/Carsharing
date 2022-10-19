@@ -23,7 +23,7 @@
     right: 0;
   }
 
-  @media (max-device-width: $xl) {
+  @media (max-device-width: $xl), (max-width: $xl) {
     width: 32px;
   }
 }

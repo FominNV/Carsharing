@@ -12,17 +12,16 @@
     border-color: $gray;
   }
 
-  @media (max-device-width: $l) {
+  @media (max-device-width: $l), (max-width: $l) {
     width: 100%;
     padding: 8px;
   }
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     width: 50%;
-    
   }
 
-  @media (max-device-width: $sm) {
+  @media (max-device-width: $sm), (max-width: $sm) {
     width: 100%;
   }
 

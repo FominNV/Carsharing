@@ -1,5 +1,5 @@
 export interface IOrderCarCardProps {
-  id: string
+  id: number
   name: string
   priceMin: number
   priceMax: number

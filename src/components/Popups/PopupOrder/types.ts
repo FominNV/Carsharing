@@ -1,3 +1,3 @@
-import { IOrdered, IOrderStatus } from "store/order/types"
+import { IOrder } from "store/admin/types";
 
-export type ChangeOrderStatusType = (order: IOrdered, status: IOrderStatus, path: string) => void
+export type ChangeOrderStatusType = (order: IOrder, statusId: number, path: string) => void;

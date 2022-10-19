@@ -1,4 +1,4 @@
-@import 'styles/sass/main';
+@import "styles/sass/main";
 
 .PopupOrder {
   position: fixed;
@@ -44,7 +44,7 @@
   &__buttons {
     @include flex;
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       @include flex(center, center, column);
     }
 
@@ -54,7 +54,7 @@
       height: 48px;
       margin-right: 16px;
 
-      @media (max-device-width: $md) {
+      @media (max-device-width: $md), (max-width: $md) {
         margin-right: 0;
         margin-bottom: 16px;
       }

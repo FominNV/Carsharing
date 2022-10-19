@@ -1,32 +1,34 @@
-import { FC, MouseEvent, useCallback, useMemo, useState } from "react"
-import { useTypedSelector } from "store/selectors"
-import SliderBtn from "components/SliderBlock/SliderBtn"
-import SliderDot from "components/SliderBlock/SliderDot"
-import SliderItem from "components/SliderBlock/SliderItem"
+import {
+  FC, MouseEvent, useCallback, useMemo, useState,
+} from "react";
+import { useTypedSelector } from "store/selectors";
+import SliderBtn from "components/SliderBlock/SliderBtn";
+import SliderDot from "components/SliderBlock/SliderDot";
+import SliderItem from "components/SliderBlock/SliderItem";
 
-import dataSlider from "./data"
+import dataSlider from "./data";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const Slider: FC = () => {
-  const { menuPopup } = useTypedSelector((state) => state.common)
-  const [slideIndex, setSlideIndex] = useState<number>(1)
+  const { menuPopup } = useTypedSelector((state) => state.common);
+  const [slideIndex, setSlideIndex] = useState<number>(1);
 
   const nextSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== dataSlider.length) {
-      setSlideIndex(slideIndex + 1)
+      setSlideIndex(slideIndex + 1);
     } else if (slideIndex === dataSlider.length) {
-      setSlideIndex(1)
+      setSlideIndex(1);
     }
-  }, [slideIndex])
+  }, [slideIndex]);
 
   const prevSlide = useCallback<EventFunc<MouseEvent>>(() => {
     if (slideIndex !== 1) {
-      setSlideIndex(slideIndex - 1)
+      setSlideIndex(slideIndex - 1);
     } else if (slideIndex === 1) {
-      setSlideIndex(dataSlider.length)
+      setSlideIndex(dataSlider.length);
     }
-  }, [slideIndex])
+  }, [slideIndex]);
 
   const slides = useMemo<JSX.Element[]>(() => dataSlider.map((elem, index) => (
     <SliderItem
@@ -37,11 +39,11 @@ const Slider: FC = () => {
       text={elem.text}
       buttonColor={elem.btnColor}
     />
-  )), [slideIndex])
+  )), [slideIndex]);
 
   const popup = useMemo<JSX.Element | false>(() => (
     menuPopup && <div className="Slider__popup" />
-  ), [menuPopup])
+  ), [menuPopup]);
 
   return (
     <div className="Slider">
@@ -62,7 +64,7 @@ const Slider: FC = () => {
         setSlideIndex={setSlideIndex}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Slider
+export default Slider;

@@ -1,9 +1,9 @@
-import { FC } from "react"
+import { FC } from "react";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const SliderSection: FC = ({ children }) => (
   <section className="SliderSection">{children}</section>
-)
+);
 
-export default SliderSection
+export default SliderSection;

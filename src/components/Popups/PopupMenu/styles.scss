@@ -11,26 +11,26 @@
   background: $black;
   z-index: 50;
 
-  @media (max-device-width: $xl) {
+  @media (max-device-width: $xl), (max-width: $sm) {
     padding-left: 97px;
   }
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     display: block;
     padding: 80px 28px 0;
   }
 
   &__links {
     position: relative;
-    height: 198px;
-    width: 250px;
+    // height: 198px;
+    width: 350px;
     @include flex(space-between, _, column);
 
-    @media (max-device-width: $lg) {
+    @media (max-device-width: $lg), (max-width: $lg) {
       height: 177px;
     }
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       height: 149px;
     }
 
@@ -45,12 +45,12 @@
         color: $green;
       }
 
-      @media (max-device-width: $lg) {
+      @media (max-device-width: $lg), (max-width: $lg) {
         font-size: 28px;
         line-height: 33px;
       }
 
-      @media (max-device-width: $md) {
+      @media (max-device-width: $md), (max-width: $md) {
         font-size: 22px;
         line-height: 26px;
       }

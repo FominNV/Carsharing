@@ -1,26 +1,28 @@
-import { FC, MouseEvent, useCallback } from "react"
-import { useTypedSelector } from "store/selectors"
-import { useDispatch } from "react-redux"
-import { setOrderCar } from "store/order/actions"
-import useFormatNumber from "hooks/useFormatNumber"
+import { FC, MouseEvent, useCallback } from "react";
+import { useTypedSelector } from "store/selectors";
+import { useDispatch } from "react-redux";
+import { formatNumber } from "common";
+import classNames from "classnames";
+import { setOrderCar } from "store/user/actions";
+import { IOrderCarCardProps } from "./types";
 
-import classNames from "classnames"
-import { IOrderCarCardProps } from "./types"
+import "./styles.scss";
 
-import "./styles.scss"
+const OrderCarCard: FC<IOrderCarCardProps> = ({
+  id, name, priceMin, priceMax, img,
+}) => {
+  const { carId } = useTypedSelector((state) => state.user.orderData);
+  const { cars } = useTypedSelector((state) => state.admin);
+  const dispatch = useDispatch();
 
-const OrderCarCard: FC<IOrderCarCardProps> = ({ id, name, priceMin, priceMax, img }) => {
-  const { car } = useTypedSelector((state) => state.order)
-  const { cars } = useTypedSelector((state) => state.car)
-  const dispatch = useDispatch()
+  const setCar = useCallback<EventFunc<MouseEvent>>(() => cars.all && cars.all.forEach((elem) => {
+    if (elem.id === id) dispatch(setOrderCar(elem));
+  }), [cars.all, id, dispatch]);
 
-  const setCar = useCallback<EventFunc<MouseEvent>>(() =>
-    cars.all && cars.all.map((elem) => {
-      if (elem.id === id) dispatch(setOrderCar(elem))
-    }), [cars.all, id, dispatch])
-
-  const cardClassName = classNames("OrderCarCard", { OrderCarCard_active: id === car?.id })
-  const price = `${useFormatNumber(priceMin)} - ${useFormatNumber(priceMax)} ₽`
+  const cardClassName = classNames("OrderCarCard", {
+    OrderCarCard_active: id === carId?.id,
+  });
+  const price = `${formatNumber(priceMin)} - ${formatNumber(priceMax)} ₽`;
 
   return (
     <button
@@ -40,7 +42,7 @@ const OrderCarCard: FC<IOrderCarCardProps> = ({ id, name, priceMin, priceMax, im
         />
       </div>
     </button>
-  )
-}
+  );
+};
 
-export default OrderCarCard
+export default OrderCarCard;

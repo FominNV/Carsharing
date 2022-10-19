@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from "react"
-import { IGeoCoordinate } from "../Steps/Place/types"
+import { Dispatch, SetStateAction } from "react";
+import { IGeoCoordinate } from "../Steps/Place/types";
 
 export interface IMapState {
   center: number[]

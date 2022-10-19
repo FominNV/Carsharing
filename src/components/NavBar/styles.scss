@@ -7,17 +7,17 @@
   background: $black;
   @include flex(space-between, center, column);
 
-  @media (max-device-width: $lg) {
+  @media (max-device-width: $lg), (max-width: $lg) {
     width: 86px;
   }
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     position: absolute;
     top: 0;
     left: 0;
     width: 65px;
     height: 64px;
-    background: $transparent;
+    background: transparent;
     color: $black;
   }
 
@@ -36,7 +36,7 @@
       color: $white;
     }
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       color: $black;
 
       &:active {
@@ -55,7 +55,7 @@
         color: $white;
       }
 
-      @media (max-device-width: $md) {
+      @media (max-device-width: $md), (max-width: $md) {
         position: absolute;
         top: 28px;
         left: 28px;
@@ -72,11 +72,11 @@
     }
 
     &_icon {
-      @media (max-device-width: $lg) {
+      @media (max-device-width: $lg), (max-width: $lg) {
         transform: scaleX(1.32);
       }
 
-      @media (max-device-width: $md) {
+      @media (max-device-width: $md), (max-width: $md) {
         transform: scaleX(1);
       }
     }
@@ -87,7 +87,7 @@
     width: 30px;
     height: 14px;
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       display: none;
     }
 
@@ -112,7 +112,7 @@
     }
 
     &_active {
-      @media (max-device-width: $md) {
+      @media (max-device-width: $md), (max-width: $md) {
         position: fixed;
         bottom: 28px;
         left: 28px;
@@ -127,7 +127,7 @@
       left: -9px;
       width: 100%;
       height: 100%;
-      color: $transparent;
+      color: transparent;
       transition: color 0.25s;
     }
 

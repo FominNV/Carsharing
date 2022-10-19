@@ -1,43 +1,46 @@
-import { CommonActionTypes, CommonDispatch, IError } from "./types"
+import {
+  CommonActionTypes,
+  CommonDispatch,
+  IAdminPopup,
+  IError,
+} from "./types";
 
-export const setLanguage: CommonDispatch<boolean> = (rusLang) => {
-  return {
-    type: CommonActionTypes.SET_LANGUAGE,
-    payload: { rusLang }
-  }
-}
+export const setLoading: CommonDispatch<boolean> = (loading) => ({
+  type: CommonActionTypes.SET_LOADING,
+  payload: { loading },
+});
 
-export const showMenuPopup: CommonDispatch<boolean> = (menuPopup) => {
-  return {
-    type: CommonActionTypes.SHOW_MENU_POPUP,
-    payload: { menuPopup }
-  }
-}
+export const setPageTitle: CommonDispatch<string> = (pageTitle) => ({
+  type: CommonActionTypes.SET_PAGE_TITLE,
+  payload: { pageTitle },
+});
 
-export const showOrderPopup: CommonDispatch<boolean> = (orderPopup) => {
-  return {
-    type: CommonActionTypes.SHOW_ORDER_POPUP,
-    payload: { orderPopup }
-  }
-}
+export const setBannerText: CommonDispatch<Nullable<string>> = (bannerText) => ({
+  type: CommonActionTypes.SET_BANNER_TEXT,
+  payload: { bannerText },
+});
 
-export const setLoading: CommonDispatch<boolean> = (loading) => {
-  return {
-    type: CommonActionTypes.SET_LOADING,
-    payload: { loading }
-  }
-}
+export const setLanguage: CommonDispatch<boolean> = (rusLang) => ({
+  type: CommonActionTypes.SET_LANGUAGE,
+  payload: { rusLang },
+});
 
-export const setError: CommonDispatch<Nullable<IError>> = (error) => {
-  return {
-    type: CommonActionTypes.SET_ERROR,
-    payload: { error }
-  }
-}
+export const setAdminPopup: CommonDispatch<Nullable<IAdminPopup>> = (adminPopup) => ({
+  type: CommonActionTypes.SET_CONFIG_POPUP,
+  payload: { adminPopup },
+});
 
-export const setPageTitle: CommonDispatch<string> = (pageTitle) => {
-  return {
-    type: CommonActionTypes.SET_PAGE_TITLE,
-    payload: { pageTitle }
-  }
-}
+export const showMenuPopup: CommonDispatch<boolean> = (menuPopup) => ({
+  type: CommonActionTypes.SHOW_MENU_POPUP,
+  payload: { menuPopup },
+});
+
+export const showOrderPopup: CommonDispatch<boolean> = (orderPopup) => ({
+  type: CommonActionTypes.SHOW_ORDER_POPUP,
+  payload: { orderPopup },
+});
+
+export const setError: CommonDispatch<Nullable<IError>> = (error) => ({
+  type: CommonActionTypes.SET_ERROR,
+  payload: { error },
+});

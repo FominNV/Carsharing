@@ -9,7 +9,7 @@
   min-height: $min-height;
   overflow: hidden;
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     min-height: none;
   }
 

@@ -1,57 +1,80 @@
-import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react"
-import { useTypedSelector } from "store/selectors"
-import { useDispatch } from "react-redux"
-import { useParams } from "react-router-dom"
-import { setError, setLoading } from "store/common/actions"
-import { setLockOrderStep } from "store/order/actions"
-import { getCars, getCategories, setCarError } from "store/car/actions"
-import Loading from "components/Loading"
-import OrderRadio from "components/OrderBlock/OrderRadio"
-import { LoadCarsType } from "./types"
-import OrderCarCard from "../../OrderCarCard"
+import {
+  FC, ReactNode, useCallback, useEffect, useMemo, useState,
+} from "react";
+import { useTypedSelector } from "store/selectors";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getEntities } from "store/admin/actions";
+import { setLoading } from "store/common/actions";
+import { setLockOrderStep } from "store/user/actions";
+import OrderRadio from "components/UI/OrderRadio";
+import OrderLoading from "components/UI/OrderLoading";
+import { URLS } from "api/Axios/data";
+import { AdminActionTypes } from "store/admin/types";
+import { OrderStepId } from "pages/OrderPage/types";
+import OrderCarCard from "../../OrderCarCard";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const Car: FC = () => {
-  const { cars, category, error } = useTypedSelector((state) => state.car)
-  const { car } = useTypedSelector((state) => state.order)
-  const { loading } = useTypedSelector((state) => state.common)
-  const [filterCars, setFilterCars] = useState<string>("Все модели")
-  const params = useParams()
-  const dispatch = useDispatch()
+  const { cars, categories } = useTypedSelector((state) => state.admin);
+  const { carId } = useTypedSelector((state) => state.user.orderData);
+  const { loading } = useTypedSelector((state) => state.common);
+  const [filterCars, setFilterCars] = useState<string>("Все модели");
+  const params = useParams();
+  const dispatch = useDispatch();
 
-  const fetchCars = useCallback<LoadCarsType>(async () => {
-    dispatch(setLoading(true))
-    await Promise.all([dispatch(getCars()), dispatch(getCategories())])
-    dispatch(setLoading(false))
-  }, [dispatch])
+  const loadCars = useCallback<VoidFunc<void>>(async () => {
+    dispatch(setLoading(true));
+    await Promise.all([
+      dispatch(getEntities(URLS.CAR_URL, AdminActionTypes.GET_ALL_CARS)),
+      dispatch(
+        getEntities(URLS.CATEGORY_URL, AdminActionTypes.GET_ALL_CATEGORIES),
+      ),
+    ]);
+    dispatch(setLoading(false));
+  }, [dispatch]);
+
+  const loadCategories = useCallback<VoidFunc<void>>(async () => {
+    dispatch(setLoading(true));
+    await Promise.all([
+      dispatch(getEntities(URLS.CAR_URL, AdminActionTypes.GET_ALL_CARS)),
+      dispatch(
+        getEntities(URLS.CATEGORY_URL, AdminActionTypes.GET_ALL_CATEGORIES),
+      ),
+    ]);
+    dispatch(setLoading(false));
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!cars.all && params.id === "car") {
-      fetchCars()
+    if (!cars.all && params.id === OrderStepId.CAR) {
+      dispatch(setLoading(true));
+      loadCars();
     }
-  }, [fetchCars, cars.all, params.id])
+  }, [cars.all, params.id, loadCars, dispatch]);
 
   useEffect(() => {
-    if (car) {
-      dispatch(setLockOrderStep("extra", true))
+    if (!categories.all && params.id === OrderStepId.CAR) {
+      dispatch(setLoading(true));
+      loadCategories();
     }
-  }, [dispatch, car])
+  }, [categories.all, params.id, loadCategories, dispatch]);
 
   useEffect(() => {
-    if (error && params.id === "car") {
-      dispatch(setCarError(false))
-      dispatch(setError({
-        number: 500,
-        message: "Ошибка сервера при загрузке транспорта."
-      }))
+    if (cars.all && categories.all && params.id === OrderStepId.CAR) {
+      dispatch(setLoading(false));
     }
-  }, [error, dispatch])
+  }, [cars.all, categories.all, params.id, loadCategories, dispatch]);
+
+  useEffect(() => {
+    if (carId) {
+      dispatch(setLockOrderStep(OrderStepId.EXTRA, true));
+    }
+  }, [dispatch, carId]);
 
   const categoryRadios = useMemo<ReactNode>(
-    () =>
-      category.all &&
-      category.all
+    () => categories.all
+      && categories.all
         .reduce((prev, current) => prev.concat(current.name), ["Все модели"])
         .map((elem, index) => (
           <OrderRadio
@@ -63,15 +86,14 @@ const Car: FC = () => {
             setState={setFilterCars}
           />
         )),
-    [category.all]
-  )
+    [categories.all],
+  );
 
   const carList = useMemo<ReactNode>(() => {
     if (cars.all) {
-      const carData =
-        filterCars === "Все модели"
-          ? cars.all
-          : cars.all.filter((elem) => elem.categoryId.name === filterCars)
+      const carData = filterCars === "Все модели"
+        ? cars.all
+        : cars.all.filter((elem) => elem.categoryId.name === filterCars);
 
       return carData.map((elem, index) => (
         <OrderCarCard
@@ -82,12 +104,15 @@ const Car: FC = () => {
           priceMax={elem.priceMax}
           img={elem.thumbnail.path}
         />
-      ))
+      ));
     }
-    return null
-  }, [cars.all, filterCars])
+    return null;
+  }, [cars.all, filterCars]);
 
-  const fetching = useMemo<ReactNode>(() => loading && <Loading />, [loading])
+  const fetching = useMemo<ReactNode>(
+    () => loading && <OrderLoading />,
+    [loading],
+  );
 
   return (
     <div className="Car">
@@ -104,7 +129,7 @@ const Car: FC = () => {
         {fetching}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Car
+export default Car;

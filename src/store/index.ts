@@ -1,22 +1,22 @@
-import { combineReducers, createStore, applyMiddleware } from "redux"
-import thunk from "redux-thunk"
-import { composeWithDevTools } from "@redux-devtools/extension"
-import { commonReducer } from "./common/reducer"
-import { orderReducer } from "./order/reducer"
-import { carReducer } from "./car/reducer"
-import { locationReducer } from "./location/reducer"
-import { rateReducer } from "./rate/reducer"
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "@redux-devtools/extension";
+import { adminReducer } from "./admin/reducer";
+import { commonReducer } from "./common/reducer";
+import { userReducer } from "./user/reducer";
 
-export type RootState = ReturnType<typeof combinedReducer>
+export type RootState = ReturnType<typeof combinedReducer>;
 
 const combinedReducer = combineReducers({
   common: commonReducer,
-  order: orderReducer,
-  car: carReducer,
-  location: locationReducer,
-  rate: rateReducer
-})
+  admin: adminReducer,
+  user: userReducer,
+});
 
-const composeEnhancers = composeWithDevTools({})
+const composeEnhancers = composeWithDevTools({});
 
-export const store = createStore(combinedReducer, {}, composeEnhancers(applyMiddleware(thunk)))
+export const store = createStore(
+  combinedReducer,
+  {},
+  composeEnhancers(applyMiddleware(thunk)),
+);

@@ -1,15 +1,13 @@
-# Carsharing
+# Admin
 
 В данном проекте используется следующий стек:
 
-Билиотеки - React.js, Typescript, Redux;
+Билиотеки - React.js, Typescript, Redux, Redux-thunk, Axios;
 
 Стилизация - Sass, flexbox;
 
 Код - Eslint. Prettier;
 
-Карты - Yandex maps;
-
 Оптимизация изображений - Adobe Photoshop
 
-Deploy [#Carsharing](https://fominnv.github.io/carsharing/)
+Deploy [#Admin](https://fominnv.github.io/admin)

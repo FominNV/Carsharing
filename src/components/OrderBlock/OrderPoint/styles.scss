@@ -8,7 +8,7 @@
   font: 300 14px/16px $roboto-light;
   color: $gray;
 
-  @media (max-device-width: $md) {
+  @media (max-device-width: $md), (max-width: $md) {
     font-size: 16px;
     line-height: 18px;
   }
@@ -40,7 +40,7 @@
     text-align: right;
     text-transform: capitalize;
 
-    @media (max-device-width: $md) {
+    @media (max-device-width: $md), (max-width: $md) {
       max-width: none;
     }
 
@@ -57,4 +57,3 @@
     }
   }
 }
-

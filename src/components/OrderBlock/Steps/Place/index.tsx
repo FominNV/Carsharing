@@ -1,254 +1,257 @@
-import { FC, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useTypedSelector } from 'store/selectors'
+import {
+  FC, ReactNode, useCallback, useEffect, useMemo, useState,
+} from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useTypedSelector } from "store/selectors";
 import {
   setLockOrderStep,
-  setOrderCar,
-  setPlaceCity,
-  setPlaceStreet
-} from 'store/order/actions'
-import { setError, setLoading } from 'store/common/actions'
-import { IMapState } from 'components/OrderBlock/OrderMap/types'
-import { getPoints, setLocationError } from 'store/location/actions'
-import useCoordinates from 'hooks/useCoordinates'
-import OrderInput from 'components/OrderBlock/OrderInput'
-import OrderMap from 'components/OrderBlock/OrderMap'
-import Loading from 'components/Loading'
-import { IPoint } from 'store/location/types'
-import { IGeoCoordinate, showOnMapType } from './types'
+  setOrderCity,
+  setOrderPoint,
+} from "store/user/actions";
+import { setLoading } from "store/common/actions";
+import { IMapState } from "components/OrderBlock/OrderMap/types";
+import OrderInput from "components/UI/OrderInput";
+import OrderMap from "components/OrderBlock/OrderMap";
+import OrderLoading from "components/UI/OrderLoading";
+import { getCoordinates } from "common";
+import { getEntities } from "store/admin/actions";
+import { URLS } from "api/Axios/data";
+import { AdminActionTypes, IPoint } from "store/admin/types";
+import { OrderStepId } from "pages/OrderPage/types";
+import { IGeoCoordinate, SetPlaceByStreetType, ShowOnMapType } from "./types";
 
-import './styles.scss'
+import "./styles.scss";
 
 const Place: FC = () => {
-  const { order, common, location } = useTypedSelector((state) => state)
-  const [city, setCity] = useState<Nullable<string>>(
-    order.place.city?.name || common.city || null
-  )
-  const [street, setStreet] = useState<Nullable<string>>(
-    order.place.street?.address || null
-  )
-  const [streetGeo, setStreetGeo] = useState<Nullable<IGeoCoordinate[]>>(null)
-  const [cityGeo, setCityGeo] = useState<Nullable<IGeoCoordinate[]>>(null)
+  const { points, cities } = useTypedSelector((state) => state.admin);
+  const { loading } = useTypedSelector((state) => state.common);
+  const [cityName, setCityName] = useState<Nullable<string>>(null);
+  const [address, setAddress] = useState<Nullable<string>>(null);
+  const [streetGeo, setStreetGeo] = useState<Nullable<IGeoCoordinate[]>>(null);
+  const [cityGeo, setCityGeo] = useState<Nullable<IGeoCoordinate[]>>(null);
+  const [errorGeo, setErrorGeo] = useState<boolean>(false);
   const [mapState, setMapState] = useState<IMapState>({
     center: [55.355198, 86.086847],
-    zoom: 10
-  })
+    zoom: 10,
+  });
 
-  const params = useParams()
-  const dispatch = useDispatch()
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const loadCities = useCallback(async () => {
+    await dispatch(getEntities(URLS.CITY_URL, AdminActionTypes.GET_ALL_CITIES));
+  }, [dispatch]);
+
+  const loadPoints = useCallback(async () => {
+    await dispatch(getEntities(URLS.POINT_URL, AdminActionTypes.GET_ALL_POINTS));
+  }, [dispatch]);
 
   const setCoordinateStates = useCallback<VoidFunc<IPoint[]>>(async (data) => {
-    const geoStreets = await Promise.all(
-      data.map(async (elem) => {
-        const cityName = elem.cityId.name
-        const streetName = elem.address
-          .split(',')[0]
-          .replace(/^ул\./, '')
-          .trim()
-        const arrayAddress = elem.address.split(' ')
-        const numberValue = arrayAddress[arrayAddress.length - 1]
-        const address = `${cityName}+${streetName}+${numberValue}`
-        const coordinates = await useCoordinates(address)
+    try {
+      const geoStreets = await Promise.all(
+        data.map(async (elem) => {
+          const pointCityName = elem.cityId.name;
+          const pointStreetName = elem.address
+            .split(",")[0]
+            .replace(/^ул\./, "")
+            .trim();
+          const arrayAddress = elem.address.split(" ");
+          const pointNumberValue = arrayAddress[arrayAddress.length - 1];
+          const pointAddress = `${pointCityName}+${pointStreetName}+${pointNumberValue}`;
+          const coordinates = await getCoordinates(pointAddress);
 
-        return {
-          name: elem.address,
-          coord: coordinates
+          return {
+            name: elem.address,
+            coord: coordinates,
+          };
+        }),
+      );
+      setStreetGeo(geoStreets);
+
+      const geoCities = await Promise.all(
+        data.map(async (elem) => {
+          const coordinates = await getCoordinates(elem.cityId.name);
+          return {
+            name: elem.cityId.name,
+            coord: coordinates,
+          };
+        }),
+      );
+      setCityGeo(geoCities);
+    } catch (err) {
+      setErrorGeo(true);
+    }
+  }, []);
+
+  const setPointByStreet = useCallback<SetPlaceByStreetType>(
+    (currentStreet, data) => data.forEach((elem) => {
+      if (elem.address === currentStreet) {
+        dispatch(
+          setOrderCity(elem.cityId),
+        );
+        dispatch(
+          setOrderPoint(elem),
+        );
+      }
+    }),
+    [dispatch],
+  );
+
+  const showCityOnMap = useCallback<ShowOnMapType>(
+    (town, data) => data.forEach((elem) => {
+      if (elem.name === town) {
+        setMapState({ center: elem.coord, zoom: 10 });
+      }
+    }),
+    [],
+  );
+
+  const showPointOnMap = useCallback<ShowOnMapType>(
+    (pointAddress, data) => data.forEach((elem) => {
+      if (elem.name === pointAddress) {
+        setMapState({ center: elem.coord, zoom: 17 });
+      }
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    if (!cities.all && params.id === OrderStepId.PLACE) {
+      dispatch(setLoading(true));
+      loadCities();
+    }
+  }, [cities.all, params.id, dispatch, loadCities]);
+
+  useEffect(() => {
+    if (!points.all && params.id === OrderStepId.PLACE) {
+      dispatch(setLoading(true));
+      loadPoints();
+    }
+  }, [points.all, params.id, dispatch, loadPoints]);
+
+  useEffect(() => {
+    if (points.all && cities.all && params.id === OrderStepId.PLACE) {
+      dispatch(setLoading(false));
+    }
+  }, [points.all, cities.all, params.id, dispatch]);
+
+  useEffect(() => {
+    if (cityGeo && params.id === OrderStepId.PLACE) {
+      dispatch(setLoading(false));
+    }
+  }, [cityGeo, params.id, dispatch]);
+
+  useEffect(() => {
+    if (cityName && address && cities.all && points.all) {
+      points.all.forEach((elem) => {
+        if (elem.cityId.name === cityName && elem.address === address) {
+          dispatch(setOrderCity(elem.cityId));
+          dispatch(setOrderPoint(elem));
+          dispatch(setLockOrderStep(OrderStepId.CAR, true));
         }
-      })
-    )
-    setStreetGeo(geoStreets)
-
-    const geoCities = await Promise.all(
-      data.map(async (elem) => {
-        const coordinates = await useCoordinates(elem.cityId.name)
-        return {
-          name: elem.cityId.name,
-          coord: coordinates
-        }
-      })
-    )
-    setCityGeo(geoCities)
-  }, [])
-
-  const setPlaceByStreet = useCallback<VoidFunc<string>>(
-    (currentStreet) =>
-      location.points?.map((elem) => {
-        if (elem.address === currentStreet) {
-          dispatch(setPlaceCity({ name: elem.cityId.name, id: elem.cityId.id }))
-          dispatch(setPlaceStreet({ address: elem.address, id: elem.id }))
-        }
-      }),
-    [dispatch, location.points]
-  )
-
-  const showCityOnMap = useCallback<showOnMapType>(
-    (town, data) =>
-      data.map((elem) => {
-        if (elem.name === town) {
-          setMapState({ center: elem.coord, zoom: 10 })
-        }
-      }),
-    []
-  )
-
-  const showOrderPlaceOnMap = useCallback<showOnMapType>(
-    (address, data) =>
-      data.map((elem) => {
-        if (elem.name === address) {
-          setMapState({ center: elem.coord, zoom: 17 })
-        }
-      }),
-    []
-  )
+      });
+    } else if (!cityName) {
+      setAddress(null);
+      dispatch(setOrderCity(null));
+      dispatch(setOrderPoint(null));
+      dispatch(setLockOrderStep(OrderStepId.CAR, false));
+      dispatch(setLockOrderStep(OrderStepId.EXTRA, false));
+      dispatch(setLockOrderStep(OrderStepId.TOTAL, false));
+    } else if (!address) {
+      dispatch(setOrderPoint(null));
+      dispatch(setLockOrderStep(OrderStepId.CAR, false));
+    }
+  }, [address, cities.all, cityName, dispatch, points.all]);
 
   useEffect(() => {
-    if (!location.points && params.id === 'place') {
-      dispatch(setLoading(true))
-      dispatch(getPoints())
+    if (points.all && params.id === OrderStepId.PLACE) {
+      setCoordinateStates(points.all);
     }
-  }, [location.points, params.id, dispatch])
+  }, [points.all, params.id, setCoordinateStates]);
 
   useEffect(() => {
-    if (location.points && params.id === 'place') {
-      setCoordinateStates(location.points)
+    if (address && streetGeo && points.all) {
+      setPointByStreet(address, points.all);
+      showPointOnMap(address, streetGeo);
     }
-  }, [location.points, params.id, setCoordinateStates])
+  }, [address, streetGeo, points.all, setPointByStreet, showPointOnMap]);
 
   useEffect(() => {
-    if (cityGeo && params.id === 'place') {
-      dispatch(setLoading(false))
+    if (cityName && cityGeo && !address) {
+      showCityOnMap(cityName, cityGeo);
     }
-  }, [cityGeo, params.id, dispatch])
+  }, [cityName, address, cityGeo, showCityOnMap]);
 
-  useEffect(() => {
-    if (street && streetGeo) {
-      setPlaceByStreet(street)
-      showOrderPlaceOnMap(street, streetGeo)
-      dispatch(setLockOrderStep('car', true))
-    } else {
-      dispatch(setPlaceStreet(null))
-    }
-  }, [street, streetGeo, dispatch, setPlaceByStreet, showOrderPlaceOnMap])
+  const citiesData = useMemo<string[]>(
+    () => (cities.all ? cities.all.map((elem) => elem.name) : []),
+    [cities.all],
+  );
 
-  useEffect(() => {
-    if (!city) {
-      dispatch(setPlaceCity(null))
-      dispatch(setPlaceStreet(null))
+  const pointsData = useMemo<string[]>(() => {
+    const currentPoints: string[] = [];
+    if (cityName && points.all) {
+      points.all.forEach((elem) => {
+        if (elem.cityId?.name === cityName) currentPoints.push(elem.address);
+      });
     }
-  }, [city, dispatch])
-
-  useEffect(() => {
-    if (city && cityGeo && !street) {
-      showCityOnMap(city, cityGeo)
-    }
-  }, [city, street, cityGeo, showCityOnMap])
-
-  useEffect(() => {
-    if (order.place.city?.name && order.place.city.name !== city) {
-      setCity(order.place.city.name)
-    }
-  }, [city, order.place.city])
-
-  useEffect(() => {
-    if (location.error) {
-      dispatch(setLocationError(false))
-      dispatch(setError({
-        number: 500,
-        message: "Ошибка сервера при загрузке геолокаций."
-      }))
-    }
-  }, [location.error, dispatch])
-
-  useEffect(() => {
-    if (!order.place.street) {
-      dispatch(setOrderCar(null))
-      dispatch(setLockOrderStep('car', false))
-      dispatch(setLockOrderStep('extra', false))
-      dispatch(setLockOrderStep('total', false))
-    }
-  }, [dispatch, order.place.street])
-
-  const cityData = useMemo<string[]>(() => {
-    const cities: string[] = []
-    if (location.points) {
-      location.points.map((elem) => {
-        if (!cities.includes(elem.cityId?.name)) {
-          cities.push(elem.cityId?.name)
-        }
-      })
-    }
-    return cities
-  }, [location.points])
-
-  const streetData = useMemo<string[]>(() => {
-    if (location.points) {
-      const data = !city
-        ? location.points
-        : location.points.filter((elem) => elem.cityId.name === city)
-      return data.map((elem) => elem.address)
-    }
-    return []
-  }, [city, location.points])
+    return currentPoints;
+  }, [cityName, points.all]);
 
   const map = useMemo<ReactNode>(
-    () =>
-      streetGeo && (
+    () => streetGeo
+      && !errorGeo && (
         <OrderMap
           mapState={mapState}
           dataGeo={streetGeo}
-          setState={setStreet}
+          setState={setAddress}
         />
-      ),
-    [streetGeo, mapState]
-  )
+    ),
+    [streetGeo, errorGeo, mapState],
+  );
 
   const content = useMemo<ReactNode>(
-    () =>
-      (common.loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="Place__inputs">
-            <OrderInput
-              id="city"
-              label="Город"
-              placeholder="Введите город"
-              value={order.place.city?.name}
-              defaultValue={common.city}
-              data={cityData}
-              setState={setCity}
-            />
-            <OrderInput
-              id="street"
-              label="Пункт выдачи"
-              placeholder="Начните вводить пункт ..."
-              value={order.place.street?.address}
-              data={streetData}
-              setState={setStreet}
-              disabled={!city}
-            />
+    () => (loading ? (
+      <OrderLoading />
+    ) : (
+      <>
+        <div className="Place__inputs">
+          <OrderInput
+            id="city"
+            label="Город"
+            placeholder="Введите город"
+            value={cityName}
+            data={citiesData}
+            setState={setCityName}
+          />
+          <OrderInput
+            id="street"
+            label="Пункт выдачи"
+            placeholder="Начните вводить пункт ..."
+            value={address}
+            data={pointsData}
+            setState={setAddress}
+            disabled={!cityName}
+          />
+        </div>
+
+        <div className="Place__map-wrap">
+          <p className="Place__map-text">Выбрать на карте:</p>
+          <div className="Place__map">
+            {map || "Карта временно недоступна. . ."}
           </div>
+        </div>
+      </>
+    )),
+    [loading, cityName, address, citiesData, pointsData, map],
+  );
 
-          <div className="Place__map-wrap">
-            <p className="Place__map-text">Выбрать на карте:</p>
-            <div className="Place__map">{map}</div>
-          </div>
-        </>
-      )),
-    [
-      common.loading,
-      city,
-      cityData,
-      common.city,
-      map,
-      order.place.city?.name,
-      order.place.street?.address,
-      streetData
-    ]
-  )
+  return (
+    <div className="Place">
+      {content}
 
-  return <div className="Place">{content}</div>
-}
+    </div>
+  );
+};
 
-export default Place
+export default Place;

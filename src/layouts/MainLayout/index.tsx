@@ -1,17 +1,17 @@
-import { FC } from "react"
-import { Helmet } from "react-helmet-async"
-import { useTypedSelector } from "store/selectors"
-import Header from "components/Header"
-import NavBar from "components/NavBar"
-import classNames from "classnames"
+import { FC } from "react";
+import { Helmet } from "react-helmet-async";
+import { useTypedSelector } from "store/selectors";
+import NavBar from "components/NavBar";
+import MainHeader from "components/Headers/MainHeader";
+import classNames from "classnames";
 
-import "./styles.scss"
+import "./styles.scss";
 
 const MainLayout: FC = ({ children }) => {
-  const { menuPopup, orderPopup, pageTitle } = useTypedSelector((state) => state.common)
+  const { menuPopup, orderPopup, pageTitle } = useTypedSelector((state) => state.common);
   const mainLayoutClassname = classNames("MainLayout", {
-    "MainLayout_scrollbar-none": menuPopup || orderPopup
-  })
+    "MainLayout_scrollbar-none": menuPopup || orderPopup,
+  });
 
   return (
     <>
@@ -23,12 +23,12 @@ const MainLayout: FC = ({ children }) => {
         <NavBar />
 
         <div className="MainLayout__content">
-          <Header />
+          <MainHeader />
           {children}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;
